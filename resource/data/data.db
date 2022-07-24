@@ -97,7 +97,7 @@ var printerData = [
         combinedrule: null
     },
     {
-        rulename: "apache_shiro_responsecookie_2",
+        rulename: "f5_bigip_requestcookie_2",
         type: 1,
         commandments:"F5 BIG-IP: 响应头中Set-Cookie泄露应用的内网IP和端口",
         ruleposition: 4,
@@ -145,7 +145,7 @@ var printerData = [
         combinedrule: null
     },
     {
-        rulename: "infomation_ip_responsebody_1",
+        rulename: "infomation_email_responsebody_3",
         type: 2,
         commandments:"敏感信息: 响应体中存在邮箱地址",
         ruleposition: 5,
@@ -153,7 +153,7 @@ var printerData = [
         combinedrule: null
     },
     {
-        rulename: "infomation_ip_responsebody_1",
+        rulename: "infomation_identitynumber_responsebody_4",
         type: 2,
         commandments:"敏感信息: 响应体中存在身份证号",
         ruleposition: 5,

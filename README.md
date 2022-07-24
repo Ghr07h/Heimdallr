@@ -20,9 +20,7 @@
 
 ## TODO
 
-1、跳转前后首次请求扫描结果丢失问题
-
-2、对响应体检测前进行筛选
+1、对响应体检测前进行筛选
 
 2、插件级别的暂停功能
 
@@ -43,12 +41,3 @@ https://github.com/iiiusky/AntiHoneypot-Chrome-simple
 https://github.com/cnrstar/anti-honeypot
 
 https://github.com/Monyer/antiHoneyPot
-
-https://mp.weixin.qq.com/s/C0F1ywUcQ6MhgNZZIXlFbA
-
-https://github.com/fingerprintjs/fingerprintjs
-
-这个是它的功能介绍：https://juejin.cn/post/7049234772937146399
-
-:
-chrome有个插件叫canvas是对抗这个浏览器指纹识别的，这个是隐藏浏览器介绍的文章，https://blog.mythsman.com/post/60d1a161e8493b525875166c/

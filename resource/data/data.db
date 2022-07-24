@@ -1,0 +1,936 @@
+/*
+指纹规则文件
+已有18条指纹规则
+已有97条蜜罐规则
+
+新增指纹规则如下
+{
+    rulename: "demorule",                     // 规则名命名规则： 组织-实体-特征-该类型规则序号，内容全小写，如 apache-tomcat-page-1、apache-shiro-cookie-1
+    type: 3,                                // 1: 常规指纹规则；2：关键字规则；3：主动扫描规则；4：蜜罐jsonp规则；5：蜜罐可能使用的js特征规则
+    commandments:"Tomcat: default example page",    // 显示的告警或指纹信息
+    ruleposition: 1,                        // 1：请求url；2：请求头；3：请求体；4：响应头；5：响应体
+    rulecontent:/rex1/im,         // 非heade类型的规则的正则表达式内容，按照js的rex规则编写，斜杠尾部自行添加flag参数（一般使用im，忽略大小写的多行匹配），斜杠内特殊字符需转义
+    //rulecontent:{"Cookie":/rex1/im }          // ruleposition为2或4的指纹，即header name与header value
+    combinedrule: ["demo1"，“demo2”]        // 联合规则的规则名rulename，
+}
+*/
+
+var printerData = [
+    {
+        rulename: "baidu_ueditor_configurl_1",
+        type: 1,
+        commandments:"Ueditor: 加载Ueditor配置文件ueditor.all.js",
+        ruleposition: 1,
+        rulecontent: /ueditor.all.js/im,
+        combinedrule: null
+    },
+    {
+        rulename: "baidu_ueditor_configurl_2",
+        type: 1,
+        commandments:"Ueditor: 加载Ueditor配置文件ueditor.config.js",
+        ruleposition: 1,
+        rulecontent: /ueditor.config.js/im,
+        combinedrule: null
+    },
+    {
+        rulename: "baidu_ueditor_keyword_3",
+        type: 2,
+        commandments:"Ueditor: 检测到关键字[ueditor]",
+        ruleposition: 5,
+        rulecontent: /tomcat/im,
+        combinedrule: null
+    },
+    {
+        rulename: "javaee_struts2_url_1",
+        type: 1,
+        commandments:"Struts2: 检测到请求目标后缀为.action/.do",
+        ruleposition: 1,
+        rulecontent: /\.action|\.do/im,
+        combinedrule: null
+    },
+    {
+        rulename: "javaee_spring_404_1",
+        type: 1,
+        commandments:"Spring: 存在Spring 404页面",
+        ruleposition: 5,
+        rulecontent: /<h1>Whitelabel Error Page<\/h1>/im,
+        combinedrule: null
+    },
+    {
+        rulename: "oracle_weblogic_404_1",
+        type: 1,
+        commandments:"Weblogic: 存在Weblogic 404页面",
+        ruleposition: 5,
+        rulecontent: /<i>Hypertext Transfer Protocol -- HTTP\/1.1<\/i>/im,
+        combinedrule: null
+    },
+    {
+        rulename: "apache_shiro_requestcookie_1",
+        type: 1,
+        commandments:"Shiro: 请求头中包含shiro特征",
+        ruleposition: 2,
+        rulecontent:{"name":"Cookie","value":/rememberme/im },
+        combinedrule: null
+    },
+    {
+        rulename: "apache_shiro_requestcookie_2",
+        type: 1,
+        commandments:"Shiro: 请求头中包含shiro-deleteMe特征",
+        ruleposition: 2,
+        rulecontent:{"name":"Cookie","value":/deleteMe/im },
+        combinedrule: null
+    },
+    {
+        rulename: "apache_shiro_responsecookie_3",
+        type: 1,
+        commandments:"Shiro: 响应头中包含shiro特征",
+        ruleposition: 4,
+        rulecontent:{"name":"Set-Cookie","value":/rememberme/im },
+        combinedrule: null
+    },
+    {
+        rulename: "f5_bigip_requestcookie_1",
+        type: 1,
+        commandments:"F5 BIG-IP: 请求头中Cookie泄露应用的内网IP和端口",
+        ruleposition: 2,
+        rulecontent:{"name":"Cookie","value":/BIGipServer/im },
+        combinedrule: null
+    },
+    {
+        rulename: "apache_shiro_responsecookie_2",
+        type: 1,
+        commandments:"F5 BIG-IP: 响应头中Set-Cookie泄露应用的内网IP和端口",
+        ruleposition: 4,
+        rulecontent:{"name":"Set-Cookie","value":/BIGipServer/im },
+        combinedrule: null
+    },
+    {
+        rulename: "ecma_json_request_1",
+        type: 1,
+        commandments:"Json: 请求体数据为json格式",
+        ruleposition: 3,
+        rulecontent: /^\{.*\}$/im,
+        combinedrule: null
+    },
+    {
+        rulename: "ecma_json_request_2",
+        type: 1,
+        commandments:"Json: 请求头Content-Type为application/json",
+        ruleposition: 2,
+        rulecontent:{"name":"Content-Type","value":/application\/json/im },
+        combinedrule: null
+    },
+    {
+        rulename: "ecma_json_response_3",
+        type: 1,
+        commandments:"Json: 响应体数据为json格式",
+        ruleposition: 5,
+        rulecontent:/^\{.*\}$/im,
+        combinedrule: null
+    },
+    {
+        rulename: "infomation_ip_responsebody_1",
+        type: 2,
+        commandments:"敏感信息: 响应体中存在IP地址",
+        ruleposition: 5,
+        rulecontent: /((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)/im,
+        combinedrule: null
+    },
+    {
+        rulename: "infomation_phonenumber_responsebody_2",
+        type: 2,
+        commandments:"敏感信息: 响应体中存在手机号",
+        ruleposition: 5,
+        rulecontent: /1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\d{8}/im,
+        combinedrule: null
+    },
+    {
+        rulename: "infomation_ip_responsebody_1",
+        type: 2,
+        commandments:"敏感信息: 响应体中存在邮箱地址",
+        ruleposition: 5,
+        rulecontent: /\w+@[\da-z\.-]+\.([a-z]{2,6}|[\u2E80-\u9FFF]{2,3})/im,
+        combinedrule: null
+    },
+    {
+        rulename: "infomation_ip_responsebody_1",
+        type: 2,
+        commandments:"敏感信息: 响应体中存在身份证号",
+        ruleposition: 5,
+        rulecontent: /[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]/im,
+        combinedrule: null
+    },
+
+
+
+
+
+
+    {
+        rulename: "honeypot_cnrstar_keyword_1",
+        type: 4,
+        commandments:"敏感域名请求: ITPUB技术论坛",
+        ruleposition: 1,
+        rulecontent: /itpub.net/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_2",
+        type: 4,
+        commandments:"敏感域名请求: 携程旅行",
+        ruleposition: 1,
+        rulecontent: /ctrip.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_3",
+        type: 4,
+        commandments:"敏感域名请求: 携程旅行接口",
+        ruleposition: 1,
+        rulecontent: /c-ctrip.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_4",
+        type: 4,
+        commandments:"敏感域名请求: 千图网",
+        ruleposition: 1,
+        rulecontent: /58pic.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_5",
+        type: 4,
+        commandments:"敏感域名请求: CSDN",
+        ruleposition: 1,
+        rulecontent: /csdn.net/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_6",
+        type: 4,
+        commandments:"敏感域名请求: IP.sb接口",
+        ruleposition: 1,
+        rulecontent: /api.ip.sb/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_7",
+        type: 4,
+        commandments:"敏感域名请求: 聚力PPTV网络电视",
+        ruleposition: 1,
+        rulecontent: /pptv.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_8",
+        type: 4,
+        commandments:"敏感域名请求: 直播吧",
+        ruleposition: 1,
+        rulecontent: /zhibo8.cc/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_9",
+        type: 4,
+        commandments:"敏感域名请求: bit.ly短链接服务",
+        ruleposition: 1,
+        rulecontent: /bit.ly/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_10",
+        type: 4,
+        commandments:"敏感域名请求: 腾讯NOW直播平台",
+        ruleposition: 1,
+        rulecontent: /now.qq.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_11",
+        type: 4,
+        commandments:"敏感域名请求: 腾讯QQ接口1-c.v.qq.com",
+        ruleposition: 1,
+        rulecontent: /c.v.qq.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_12",
+        type: 4,
+        commandments:"敏感域名请求: 腾讯QQ接口2-node.video.qq.com",
+        ruleposition: 1,
+        rulecontent: /node.video.qq.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_13",
+        type: 4,
+        commandments:"敏感域名请求: ChinaUnix IT技术博客",
+        ruleposition: 1,
+        rulecontent: /chinaunix.net/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_14",
+        type: 4,
+        commandments:"敏感域名请求: 优酷接口1-cmstool.youku.com",
+        ruleposition: 1,
+        rulecontent: /cmstool.youku.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_15",
+        type: 4,
+        commandments:"敏感域名请求: 优酷接口2-hudong.vip.youku.com",
+        ruleposition: 1,
+        rulecontent: /hudong.vip.youku.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_16",
+        type: 4,
+        commandments:"敏感域名请求: 网易跟帖",
+        ruleposition: 1,
+        rulecontent: /tie.163.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_17",
+        type: 4,
+        commandments:"敏感域名请求: 网易163接口1-comment.api.163.com",
+        ruleposition: 1,
+        rulecontent: /comment.api.163.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_18",
+        type: 4,
+        commandments:"敏感域名请求: 网易163接口2-comment.money.163.com",
+        ruleposition: 1,
+        rulecontent: /comment.money.163.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_19",
+        type: 4,
+        commandments:"敏感域名请求: 当当网",
+        ruleposition: 1,
+        rulecontent: /dangdang.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_20",
+        type: 4,
+        commandments:"敏感域名请求: UC浏览器",
+        ruleposition: 1,
+        rulecontent: /down2.uc.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_21",
+        type: 4,
+        commandments:"敏感域名请求: Github",
+        ruleposition: 1,
+        rulecontent: /github.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_22",
+        type: 4,
+        commandments:"敏感域名请求: Github接口1-mozilla.github.io",
+        ruleposition: 1,
+        rulecontent: /mozilla.github.io/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_23",
+        type: 4,
+        commandments:"敏感域名请求: 虎牙直播",
+        ruleposition: 1,
+        rulecontent: /huya.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_24",
+        type: 4,
+        commandments:"敏感域名请求: 51CTO接口1-home.51cto.com",
+        ruleposition: 1,
+        rulecontent: /home.51cto.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_25",
+        type: 4,
+        commandments:"敏感域名请求: 51CTO接口2-ucenter.51cto.com",
+        ruleposition: 1,
+        rulecontent: /ucenter.51cto.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_26",
+        type: 4,
+        commandments:"敏感域名请求: 城通网盘",
+        ruleposition: 1,
+        rulecontent: /ctfile.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_27",
+        type: 4,
+        commandments:"敏感域名请求: 金融界财经金融门户",
+        ruleposition: 1,
+        rulecontent: /jrj.com.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_28",
+        type: 4,
+        commandments:"敏感域名请求: 爱问知识人问答平台",
+        ruleposition: 1,
+        rulecontent: /iask.sina.com.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_29",
+        type: 4,
+        commandments:"敏感域名请求: 新浪接口1-ka.sina.com.cn",
+        ruleposition: 1,
+        rulecontent: /ka.sina.com.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_30",
+        type: 4,
+        commandments:"敏感域名请求: 新浪接口2-新浪用户接口",
+        ruleposition: 1,
+        rulecontent: /login.sina.com.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_31",
+        type: 4,
+        commandments:"敏感域名请求: 苹果itunes接口",
+        ruleposition: 1,
+        rulecontent: /itunes.apple.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_32",
+        type: 4,
+        commandments:"敏感域名请求: 新浪微博接口1-m.game.weibo.cn",
+        ruleposition: 1,
+        rulecontent: /m.game.weibo.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_33",
+        type: 4,
+        commandments:"敏感域名请求: 新浪微博接口2-i.qr.weibo.cn",
+        ruleposition: 1,
+        rulecontent: /i.qr.weibo.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_34",
+        type: 4,
+        commandments:"敏感域名请求: 新浪微博",
+        ruleposition: 1,
+        rulecontent: /weibo.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_35",
+        type: 4,
+        commandments:"敏感域名请求: ZOL中关村在线",
+        ruleposition: 1,
+        rulecontent: /my.zol.com.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_36",
+        type: 4,
+        commandments:"敏感域名请求: 人人网",
+        ruleposition: 1,
+        rulecontent: /renren.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_37",
+        type: 4,
+        commandments:"敏感域名请求: 爱奇艺",
+        ruleposition: 1,
+        rulecontent: /iqiyi.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_38",
+        type: 4,
+        commandments:"敏感域名请求: 爱奇艺接口1-stc.iqiyipic.com",
+        ruleposition: 1,
+        rulecontent: /stc.iqiyipic.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_39",
+        type: 4,
+        commandments:"敏感域名请求: 芒果TV",
+        ruleposition: 1,
+        rulecontent: /playbill.api.mgtv.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_40",
+        type: 4,
+        commandments:"敏感域名请求: skylink即时通讯和视频聊天",
+        ruleposition: 1,
+        rulecontent: /skylink.io/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_41",
+        type: 4,
+        commandments:"敏感域名请求: 飞卢小说接口1-s.faloo.com",
+        ruleposition: 1,
+        rulecontent: /s.faloo.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_42",
+        type: 4,
+        commandments:"敏感域名请求: 飞卢小说接口2-u.faloo.com",
+        ruleposition: 1,
+        rulecontent: /u.faloo.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_43",
+        type: 4,
+        commandments:"敏感域名请求: 搜狐网",
+        ruleposition: 1,
+        rulecontent: /v2.sohu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_44",
+        type: 4,
+        commandments:"敏感域名请求: 搜狐号",
+        ruleposition: 1,
+        rulecontent: /uis.i.sohu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_45",
+        type: 4,
+        commandments:"敏感域名请求: 搜狗搜索",
+        ruleposition: 1,
+        rulecontent: /wap.sogou.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_46",
+        type: 4,
+        commandments:"敏感域名请求: ITeye软件开发交流社区",
+        ruleposition: 1,
+        rulecontent: /www.iteye.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_47",
+        type: 4,
+        commandments:"敏感域名请求: 猪八戒网外包平台",
+        ruleposition: 1,
+        rulecontent: /www.zbj.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_48",
+        type: 4,
+        commandments:"敏感域名请求: 美橙互联：域名注册、VPS、企业网站服务",
+        ruleposition: 1,
+        rulecontent: /cndns.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_49",
+        type: 4,
+        commandments:"敏感域名请求: 美橙互联：建站之星",
+        ruleposition: 1,
+        rulecontent: /sitestar.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_50",
+        type: 4,
+        commandments:"敏感域名请求: FastAdmin后台开发框架官网接口",
+        ruleposition: 1,
+        rulecontent: /api.fastadmin.net/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_51",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口1-m.site.baidu.com",
+        ruleposition: 1,
+        rulecontent: /m.site.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_52",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口2-账号接口",
+        ruleposition: 1,
+        rulecontent: /passport.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_53",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口3-wappassalltest.baidu.com",
+        ruleposition: 1,
+        rulecontent: /wappassalltest.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_54",
+        type: 4,
+        commandments:"敏感域名请求: 百度百科",
+        ruleposition: 1,
+        rulecontent: /baike.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_55",
+        type: 4,
+        commandments:"敏感域名请求: 百度商桥企业营销接口",
+        ruleposition: 1,
+        rulecontent: /p.qiao.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_56",
+        type: 4,
+        commandments:"敏感域名请求: 百度地图",
+        ruleposition: 1,
+        rulecontent: /map.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_57",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口4-datax.baidu.com",
+        ruleposition: 1,
+        rulecontent: /datax.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_58",
+        type: 4,
+        commandments:"敏感域名请求: 百度贴吧",
+        ruleposition: 1,
+        rulecontent: /tieba.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_59",
+        type: 4,
+        commandments:"敏感域名请求: 百度支付：度小满钱包",
+        ruleposition: 1,
+        rulecontent: /zhifu.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_60",
+        type: 4,
+        commandments:"敏感域名请求: 高德地图RESTful接口",
+        ruleposition: 1,
+        rulecontent: /restapi.amap.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_61",
+        type: 4,
+        commandments:"敏感域名请求: 千千静听",
+        ruleposition: 1,
+        rulecontent: /musicapi.taihe.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_62",
+        type: 4,
+        commandments:"敏感域名请求: 京东商城",
+        ruleposition: 1,
+        rulecontent: /api.m.jd.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_63",
+        type: 4,
+        commandments:"敏感域名请求: 凤凰网接口1-so.v.ifeng.com",
+        ruleposition: 1,
+        rulecontent: /so.v.ifeng.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_64",
+        type: 4,
+        commandments:"敏感域名请求: 凤凰网接口2-stadig.ifeng.com",
+        ruleposition: 1,
+        rulecontent: /stadig.ifeng.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_65",
+        type: 4,
+        commandments:"敏感域名请求: 博客园接口1-wz.cnblogs.com",
+        ruleposition: 1,
+        rulecontent: /wz.cnblogs.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_66",
+        type: 4,
+        commandments:"敏感域名请求: 博客园接口2-passport.cnblogs.com",
+        ruleposition: 1,
+        rulecontent: /passport.cnblogs.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_67",
+        type: 4,
+        commandments:"敏感域名请求: 博客园接口3-account.cnblogs.com",
+        ruleposition: 1,
+        rulecontent: /account.cnblogs.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_68",
+        type: 4,
+        commandments:"敏感域名请求: 疑似开发人员博客-mths.be",
+        ruleposition: 1,
+        rulecontent: /mths.be/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_69",
+        type: 5,
+        commandments:"敏感域名请求: 疑似表单验证和密码加密框架",
+        ruleposition: 1,
+        rulecontent: /validity.thatscaptaintoyou.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_70",
+        type: 4,
+        commandments:"敏感域名请求: ScorecardResearch互联网行为分析",
+        ruleposition: 1,
+        rulecontent: /sb.scorecardresearch.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_71",
+        type: 4,
+        commandments:"敏感域名请求: Growing企业级数据接口(多个社交网站使用)",
+        ruleposition: 1,
+        rulecontent: /assets.growingio.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_72",
+        type: 4,
+        commandments:"敏感域名请求: GNU操作系统",
+        ruleposition: 1,
+        rulecontent: /gnu.org/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_73",
+        type: 4,
+        commandments:"敏感域名请求: 阿里短链接平台",
+        ruleposition: 1,
+        rulecontent: /g.alicdn.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_74",
+        type: 4,
+        commandments:"敏感域名请求: 爱奇艺接口2-msg.qy.net",
+        ruleposition: 1,
+        rulecontent: /msg.qy.net/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_75",
+        type: 4,
+        commandments:"敏感域名请求: 电动志趣享",
+        ruleposition: 1,
+        rulecontent: /github.comgithub.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_76",
+        type: 4,
+        commandments:"敏感域名请求: 天涯论坛",
+        ruleposition: 1,
+        rulecontent: /tianya.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_77",
+        type: 4,
+        commandments:"敏感域名请求: 猫扑网",
+        ruleposition: 1,
+        rulecontent: /passport.mop.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_78",
+        type: 4,
+        commandments:"敏感域名请求: 1616上网导航",
+        ruleposition: 1,
+        rulecontent: /chaxun.1616.net/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_79",
+        type: 4,
+        commandments:"敏感域名请求: 虎扑论坛",
+        ruleposition: 1,
+        rulecontent: /remind.hupu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_80",
+        type: 4,
+        commandments:"敏感域名请求: 哔哩哔哩动画",
+        ruleposition: 1,
+        rulecontent: /bilibili.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_cnrstar_keyword_81",
+        type: 4,
+        commandments:"敏感域名请求: 阿里接口极有家装修平台",
+        ruleposition: 1,
+        rulecontent: /jiyoujia.com/im,
+        combinedrule: null
+    },
+
+
+    {
+        rulename: "honeypot_monyer_keyword_2",
+        type: 4,
+        commandments:"敏感域名请求: 360天御企业安全平台",
+        ruleposition: 1,
+        rulecontent: /appscan.360.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_3",
+        type: 4,
+        commandments:"敏感域名请求: 小米手机服务",
+        ruleposition: 1,
+        rulecontent: /m.mi.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_4",
+        type: 4,
+        commandments:"敏感域名请求: 百度支付：度小满钱包2",
+        ruleposition: 1,
+        rulecontent: /zhifu.duxiaoman.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_5",
+        type: 4,
+        commandments:"敏感域名请求: 小米账户",
+        ruleposition: 1,
+        rulecontent: /account.xiaomi.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_6",
+        type: 4,
+        commandments:"敏感域名请求: 阿里淘宝网接口1-log.mmstat.com",
+        ruleposition: 1,
+        rulecontent: /log.mmstat.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_7",
+        type: 4,
+        commandments:"敏感域名请求: 小米接口1-s1.mi.com",
+        ruleposition: 1,
+        rulecontent: /s1.mi.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_8",
+        type: 4,
+        commandments:"敏感域名请求: 阿里淘宝网接口2-fourier.taobao.com",
+        ruleposition: 1,
+        rulecontent: /fourier.taobao.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_9",
+        type: 4,
+        commandments:"敏感域名请求: Fingerprints设备识别",
+        ruleposition: 1,
+        rulecontent: /api.fpjs.io/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_keyword_10",
+        type: 4,
+        commandments:"敏感域名请求: Fingerprints设备识别2",
+        ruleposition: 1,
+        rulecontent: /api.sjpf.io/im,
+        combinedrule: null
+    },
+
+
+
+
+    {
+        rulename: "honeypot_monyer_statisticalwebsite_12",
+        type: 5,
+        commandments:"网站流量分析和跟踪请求: 百度统计",
+        ruleposition: 1,
+        rulecontent: /hm.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_statisticalwebsite_13",
+        type: 5,
+        commandments:"网站流量分析和跟踪请求: 友盟CNZZ网站流量统计",
+        ruleposition: 1,
+        rulecontent: /cnzz.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_statisticalwebsite_14",
+        type: 5,
+        commandments:"网站流量分析和跟踪请求: 51LA网站统计与数据分析",
+        ruleposition: 1,
+        rulecontent: /51.la/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_statisticalwebsite_15",
+        type: 5,
+        commandments:"网站流量分析和跟踪请求: 谷歌分析统计",
+        ruleposition: 1,
+        rulecontent: /google-analytics.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_monyer_statisticalwebsite_16",
+        type: 5,
+        commandments:"网站流量分析和跟踪请求: 谷歌访问跟踪器",
+        ruleposition: 1,
+        rulecontent: /googletagservices.com/im,
+        combinedrule: null
+    },
+
+]

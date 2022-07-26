@@ -219,29 +219,22 @@ function initCheckMonitor(){
 }
 
 function setResponseCheckListener(){
+  if (chrome.tabs.onActivated.hasListener(responseBodyCheckListener)){
+    chrome.tabs.onActivated.removeListener(responseBodyCheckListener)
+    if (nowTabs != -999) {
+      chrome.debugger.detach({tabId: nowTabs})
+    }
+  }
+  if (chrome.debugger.onEvent.hasListener(allNetworkEventHandler)) {
+    chrome.debugger.onEvent.removeListener(allNetworkEventHandler)
+  }
   if (HConfig.responseCheck == null || HConfig.responseCheck == false) {
-    if (chrome.tabs.onActivated.hasListener(responseBodyCheckListener)){
-      chrome.tabs.onActivated.removeListener(responseBodyCheckListener)
-      if (nowTabs != -999) {
-        chrome.debugger.detach({tabId: nowTabs})
-      }
-    }
-    if (chrome.debugger.onEvent.hasListener(allNetworkEventHandler)) {
-      chrome.debugger.onEvent.removeListener(allNetworkEventHandler)
-    }
+    // 设置为关闭时无操作
   } else {
-    if (chrome.tabs.onActivated.hasListener(responseBodyCheckListener)){
-      chrome.tabs.onActivated.removeListener(responseBodyCheckListener)
-      if (nowTabs != -999) {
-        chrome.debugger.detach({tabId: nowTabs})
-      }
-    }
-    if (chrome.debugger.onEvent.hasListener(allNetworkEventHandler)) {
-      chrome.debugger.onEvent.removeListener(allNetworkEventHandler)
-    }
     chrome.tabs.onActivated.addListener(responseBodyCheckListener)
     responseBodyCheckListener()
   }
+
 }
 
 

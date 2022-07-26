@@ -41,3 +41,7 @@ https://github.com/iiiusky/AntiHoneypot-Chrome-simple
 https://github.com/cnrstar/anti-honeypot
 
 https://github.com/Monyer/antiHoneyPot
+
+## 许可证
+
+使用GPL V2协议发行，详情参见LICENSE

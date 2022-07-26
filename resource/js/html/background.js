@@ -3,7 +3,8 @@
 var HConfig = {"keyWordSniff" : true, "noPageCache" : true, "blockHoneypot" : false, "responseCheck" : false, "randomMachine" : false, "modifyUA": ""}
 var HPrinter = {"position1" : [], "position2" : [], "position3" : [], "position4" : [], "position5" : []};
 var HSniffResult = {shost: "localhost", sresult:[]}
-var nowTabs = {"tabId": -999, "tabHost": ""}
+var nowTabs = -999
+var responseBodyHost = {}
 
 // 清除配置缓存
 // chrome.storage.local.set({HConfig: null}, function() {});
@@ -189,6 +190,7 @@ function tabsOnActiveChangedListener(tabId, selectInfo) {
 function tabsOnUpdatedListener(tabId, changeInfo, tab) {
   if(changeInfo.status == "complete" && tab.url != null){
     chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
+      console.log(tabArray);
       if (tabArray[0].id != null && tabArray[0].id == tab.id){
         let hhost = tab.url.split('/')[2]
         if (HSniffResult.shost != hhost){
@@ -217,39 +219,27 @@ function initCheckMonitor(){
 }
 
 function setResponseCheckListener(){
-  console.log(HConfig);
-  console.log("开始设置监听");
   if (HConfig.responseCheck == null || HConfig.responseCheck == false) {
-    console.log("配置为假");
     if (chrome.tabs.onActivated.hasListener(responseBodyCheckListener)){
-      console.log("存在页面切换监听器");
       chrome.tabs.onActivated.removeListener(responseBodyCheckListener)
-      if (nowTabs.tabId != -999) {
-        console.log("关闭相关页面的调试",nowTabs.tabId );
-        chrome.debugger.detach({tabId: nowTabs.tabId})
+      if (nowTabs != -999) {
+        chrome.debugger.detach({tabId: nowTabs})
       }
     }
     if (chrome.debugger.onEvent.hasListener(allNetworkEventHandler)) {
-      console.log("存在事件告警监听器");
       chrome.debugger.onEvent.removeListener(allNetworkEventHandler)
     }
   } else {
-    console.log("配置为真");
     if (chrome.tabs.onActivated.hasListener(responseBodyCheckListener)){
-      console.log("存在页面切换监听器");
       chrome.tabs.onActivated.removeListener(responseBodyCheckListener)
-      if (nowTabs.tabId != -999) {
-        console.log("关闭相关页面的调试",nowTabs.tabId );
-        chrome.debugger.detach({tabId: nowTabs.tabId})
+      if (nowTabs != -999) {
+        chrome.debugger.detach({tabId: nowTabs})
       }
     }
     if (chrome.debugger.onEvent.hasListener(allNetworkEventHandler)) {
-      console.log("存在事件告警监听器");
       chrome.debugger.onEvent.removeListener(allNetworkEventHandler)
     }
-    console.log("添加页面监听");
     chrome.tabs.onActivated.addListener(responseBodyCheckListener)
-    console.log("进行一次页面监听");
     responseBodyCheckListener()
   }
 }
@@ -264,7 +254,12 @@ function webRequestOnbeforeRequestListener(details) {
         if (i.type == 4 && HSniffResult.shost.search(i.rulecontent) != -1) {
           // 匹配蜜罐规则，但是访问网站本身就是规则指向的网站，此时不做处理
         } else {
-          let nowResult = {sid: i.type, scontent: i.commandments, sshost: details.initiator.split('/')[2]}
+          let nowResult
+          if (details.initiator != null) {
+            nowResult = {sid: i.type, scontent: i.commandments, sshost: details.initiator.split('/')[2]}
+          } else if (details.type == "main_frame" && details.url != null){
+            nowResult = {sid: i.type, scontent: i.commandments, sshost: details.url.split('/')[2]}
+          }
           if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
             HSniffResult.sresult.push(nowResult)
             refreshResult()
@@ -359,18 +354,18 @@ function webRequestOnResponseStartedListener(details) {
 function responseBodyCheckListener(){
 	chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
       if (tabArray[0].url.search(/^[http://|https://|file://]/i) == 0){
-        if (nowTabs.tabId == -999) {
+        if (nowTabs == -999) {
           if (tabArray[0].id != null){
-            nowTabs.tabId = tabArray[0].id
-            nowTabs.tabHost = tabArray[0].url.split('/')[2]
-            chrome.debugger.attach({tabId: nowTabs.tabId}, "1.0", onTabsAttach.bind(null,nowTabs.tabId));
+            nowTabs = tabArray[0].id
+            responseBodyHost = {}
+            chrome.debugger.attach({tabId: nowTabs}, "1.0", onTabsAttach.bind(null, nowTabs));
           }
         } else {
-          chrome.debugger.detach({tabId: nowTabs.tabId},function(){
+          chrome.debugger.detach({tabId: nowTabs},function(){
             chrome.debugger.onEvent.removeListener(allNetworkEventHandler);
-            nowTabs.tabId = tabArray[0].id
-            nowTabs.tabHost = tabArray[0].url.split('/')[2]
-            chrome.debugger.attach({tabId: nowTabs.tabId}, "1.0", onTabsAttach.bind(null,nowTabs.tabId));
+            nowTabs = tabArray[0].id
+            responseBodyHost = {}
+            chrome.debugger.attach({tabId: nowTabs}, "1.0", onTabsAttach.bind(null, nowTabs));
           })
         } 
       }
@@ -383,29 +378,49 @@ function onTabsAttach(id) {
 }
 
 function allNetworkEventHandler(debuggerId, message, params) {
-  if (nowTabs.tabId != debuggerId.tabId) {
+  if (nowTabs != debuggerId.tabId) {
     return
-  }
-  if (message == "Network.loadingFinished") {
-    chrome.debugger.sendCommand({tabId: debuggerId.tabId}, "Network.getResponseBody", {"requestId": params.requestId}, function(response) {
-      let responseBodyContent = null
-      if (response.base64Encoded != null && response.base64Encoded == true){
-        responseBodyContent = atob(response.body)
-      } else if (response.base64Encoded != null && response.base64Encoded == false) {
-        responseBodyContent = response.body
-      } else {
-        return
-      }
-      for ( let i of HPrinter.position5 ) {
-        let checkResult = checkRule(responseBodyContent,i.rulecontent)
-        if (checkResult == true){
-          let nowResult = {sid: i.type, scontent: i.commandments, sshost: nowTabs.tabHost }
-          if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
-            HSniffResult.sresult.push(nowResult)
-            refreshResult()
+  }  
+  if (message == "Network.dataReceived") {
+    if (responseBodyHost[params.requestId] != null) {
+      chrome.debugger.sendCommand({tabId: debuggerId.tabId}, "Network.getResponseBody", {"requestId": params.requestId}, function(response) {
+        let responseBodyContent = null
+        if (response != null && response.base64Encoded != null){
+          if (response.base64Encoded == true){
+            responseBodyContent = atob(response.body)
+          } else {
+            responseBodyContent = response.body
+          }
+        } else {
+          return
+        }
+        for ( let i of HPrinter.position5 ) {
+          let checkResult = checkRule(responseBodyContent,i.rulecontent)
+          if (checkResult == true){
+            let nowResult = {sid: i.type, scontent: i.commandments, sshost: responseBodyHost[params.requestId] }
+            if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
+              HSniffResult.sresult.push(nowResult)
+              refreshResult()
+            }
           }
         }
+        delete responseBodyHost[params.requestId]
+      })
+    }
+  } else if (message == "Network.requestWillBeSent") {
+    if (params.documentURL != null && params.requestId!= null){
+      if (params.documentURL.search(/^[http://|https://|file://]/i) == 0) {
+        if (params.type != null && (params.type == "Document" | params.type == "Script" |params.type == "XHR" |params.type == "Other" |params.type == "Fetch")){
+          // pass "Image" "Media" "Stylesheet" "Font"
+          responseBodyHost[params.requestId] = params.documentURL.split('/')[2]
+        }
       }
-    })
+    }
+  } else if (message == "Network.loadingFailed") {
+    if (params.requestId!= null){
+      if (responseBodyHost[params.requestId] != null) {
+        delete responseBodyHost[params.requestId]
+      }
+    }
   }
 }

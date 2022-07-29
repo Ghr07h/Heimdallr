@@ -42,6 +42,8 @@ https://github.com/cnrstar/anti-honeypot
 
 https://github.com/Monyer/antiHoneyPot
 
+https://github.com/fuckjsonp/FuckJsonp-RCE-CVE-2022-26809-SQL-XSS-FuckJsonp
+
 ## 许可证
 
 使用GPL V2协议发行，详情参见LICENSE

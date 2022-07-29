@@ -933,4 +933,120 @@ var printerData = [
         combinedrule: null
     },
 
+
+
+
+
+    {
+        rulename: "honeypot_fuckjsonp_keyword_1",
+        type: 4,
+        commandments:"敏感域名请求: 腾讯视频接口",
+        ruleposition: 1,
+        rulecontent: /access.video.qq.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_2",
+        type: 4,
+        commandments:"敏感域名请求: 腾讯视频支付接口",
+        ruleposition: 1,
+        rulecontent: /pay.video.qq.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_3",
+        type: 4,
+        commandments:"敏感域名请求: 苏宁易购接口",
+        ruleposition: 1,
+        rulecontent: /myjr.suning.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_4",
+        type: 4,
+        commandments:"敏感域名请求: 苏宁易购登录接口",
+        ruleposition: 1,
+        rulecontent: /loginst.suning.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_5",
+        type: 4,
+        commandments:"敏感域名请求: 凤凰游戏域名接口",
+        ruleposition: 1,
+        rulecontent: /www.fhyx.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_6",
+        type: 4,
+        commandments:"敏感域名请求: 有妖气原创漫画搜索接口",
+        ruleposition: 1,
+        rulecontent: /so.u17.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_7",
+        type: 4,
+        commandments:"敏感域名请求: 爱学术域名接口",
+        ruleposition: 1,
+        rulecontent: /www.ixueshu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_8",
+        type: 4,
+        commandments:"敏感域名请求: 豆瓣网接口",
+        ruleposition: 1,
+        rulecontent: /www.douban.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_9",
+        type: 4,
+        commandments:"敏感域名请求: 迅雷下载接口",
+        ruleposition: 1,
+        rulecontent: /yuancheng.xunlei.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_10",
+        type: 4,
+        commandments:"敏感域名请求: 百度招商接口",
+        ruleposition: 1,
+        rulecontent: /istats.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_11",
+        type: 4,
+        commandments:"敏感域名请求: 运营商[联通]接口",
+        ruleposition: 1,
+        rulecontent: /10010.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_12",
+        type: 4,
+        commandments:"敏感域名请求: 运营商[移动]接口",
+        ruleposition: 1,
+        rulecontent: /10086.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_13",
+        type: 4,
+        commandments:"敏感域名请求: 运营商[电信]接口1",
+        ruleposition: 1,
+        rulecontent: /189.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_fuckjsonp_keyword_2",
+        type: 4,
+        commandments:"敏感域名请求: 运营商[电信]接口2",
+        ruleposition: 1,
+        rulecontent: /chinatelecom.com.cn/im,
+        combinedrule: null
+    },
 ]

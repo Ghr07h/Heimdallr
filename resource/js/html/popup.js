@@ -22,6 +22,8 @@ const App = {
     },
     methods: {
         initPopupConfig(nowConf){
+            this.pluginSwitch = nowConf.pluginStart
+            
             this.responseCheckSwitch = nowConf.responseCheck
             this.blockHoneypotSwitch = nowConf.blockHoneypot
             this.keyWordSniffSwitch = nowConf.keyWordSniff
@@ -39,7 +41,15 @@ const App = {
               });
         },
         changePlugin(){
+            if (this.pluginSwitch == true){
+                chrome.extension.getBackgroundPage().deleteCheckMonitor()
+
+            } else if (this.pluginSwitch == false){
+                chrome.extension.getBackgroundPage().initMonitor()
+            }
             this.pluginSwitch =! this.pluginSwitch
+            chrome.extension.getBackgroundPage().HConfig.pluginStart = this.pluginSwitch
+            chrome.storage.local.set({HConfig: chrome.extension.getBackgroundPage().HConfig}, function() {})
         },
         removePopupResult(event){
             var _this = this;

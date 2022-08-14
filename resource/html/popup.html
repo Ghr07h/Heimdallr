@@ -23,14 +23,14 @@
 
                     <div style="display:inline-flex;align-items: center;justify-content: flex-end; flex-grow: 1;">
                         <el-tooltip class="box-item" effect="dark" content="暂停插件"  placement="bottom-end" v-if="pluginSwitch">
-                            <el-button type="default" circle @click="changePlugin" disabled>
+                            <el-button type="default" circle @click="changePlugin">
                                 <el-icon style="vertical-align: middle;">
                                     <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-78e17ca8=""><path fill="currentColor" d="M352 159.872V230.4a352 352 0 1 0 320 0v-70.528A416.128 416.128 0 0 1 512 960a416 416 0 0 1-160-800.128z"></path><path fill="currentColor" d="M512 64q32 0 32 32v320q0 32-32 32t-32-32V96q0-32 32-32z"></path></svg>
                                 </el-icon>
                             </el-button>
                         </el-tooltip>
                         <el-tooltip class="box-item" effect="dark" content="启用插件"  placement="bottom-end" v-else>
-                            <el-button type="default" circle  @click="changePlugin" disabled>
+                            <el-button type="default" circle  @click="changePlugin">
                                 <el-icon style="vertical-align: middle;">
                                     <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-78e17ca8=""><path fill="currentColor" d="M384 192v640l384-320.064z"></path></svg>
                                 </el-icon>

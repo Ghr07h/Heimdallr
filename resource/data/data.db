@@ -89,6 +89,14 @@ var printerData = [
         combinedrule: null
     },
     {
+        rulename: "apache_shiro_responsecookie_4",
+        type: 1,
+        commandments:"Shiro: 响应头中包含shiro-deleteMe特征",
+        ruleposition: 4,
+        rulecontent:{"name":"Set-Cookie","value":/deleteMe/im },
+        combinedrule: null
+    },
+    {
         rulename: "f5_bigip_requestcookie_1",
         type: 1,
         commandments:"F5 BIG-IP: 请求头中Cookie泄露应用的内网IP和端口",

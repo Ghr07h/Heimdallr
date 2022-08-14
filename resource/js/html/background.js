@@ -1,19 +1,13 @@
 'use strict'
 
-var HConfig = {"keyWordSniff" : true, "noPageCache" : true, "blockHoneypot" : false, "responseCheck" : false, "randomMachine" : false, "modifyUA": ""}
+var HConfig = {"keyWordSniff" : true, "noPageCache" : true, "blockHoneypot" : false, "responseCheck" : false, "randomMachine" : false, "pluginStart" : true, "modifyUA": ""}
 var HPrinter = {"position1" : [], "position2" : [], "position3" : [], "position4" : [], "position5" : []};
 var HSniffResult = {shost: "localhost", sresult:[]}
 var nowTabs = -999
 var responseBodyHost = {}
 
 // 清除配置缓存
-// chrome.storage.local.set({HConfig: null}, function() {});
-
-
-
-
-
-
+//chrome.storage.local.set({HConfig: null}, function() {});
 
 
 
@@ -26,8 +20,6 @@ var responseBodyHost = {}
 //   //console.log(22222,details)
 //   //getResponse()
 // }, {urls: ["<all_urls>"]}, ["responseHeaders","extraHeaders"]);
-
-
 
 
 // 删除 User-Agent 标头：
@@ -52,8 +44,6 @@ Init()
 
 
 
-
-
 function Init() {
   initConfig()
   //initPrinter()
@@ -63,7 +53,7 @@ function Init() {
 
 function initConfig(){
   chrome.browserAction.setBadgeBackgroundColor({color: "#107c10"})
-  HConfig = {"keyWordSniff" : true, "noPageCache" : true, "blockHoneypot" : false, "responseCheck" : false, "randomMachine" : false, "modifyUA": ""}
+  HConfig = {"keyWordSniff" : true, "noPageCache" : true, "blockHoneypot" : false, "responseCheck" : false, "randomMachine" : false,  "pluginStart" : true, "modifyUA": ""}
   chrome.storage.local.get(['HConfig'], function(webstorage) {
     if (webstorage.HConfig != null && webstorage.HConfig != {}){
         HConfig = webstorage.HConfig
@@ -77,7 +67,6 @@ function initConfig(){
 
 function initPrinter(){
   HPrinter = {"position1" : [], "position2" : [], "position3" : [], "position4" : [], "position5" : []};
-  
   if (HConfig.keyWordSniff == false){
     for ( let i of printerData ) {
       if (i.type != 2){
@@ -117,7 +106,7 @@ function initData(){
 }
 
 function initMonitor(){
-  // 杂项
+  // 工具杂项
   initToolsMonitor()
   // tabs 变更逻辑
   initTabsMonitor()
@@ -146,13 +135,8 @@ function initToolsMonitor() {
       console.log("modify config",changes.HConfig.newValue);
     }
   });
-  // 右键菜单监听
-  chrome.contextMenus.create({
-    title: "发起主动扫描",
-    enabled: false,
-    onclick: function(){alert('功能暂不可用！');}
-  });
 }
+
 
 
 function checkRule(checkContent, checkRule){
@@ -163,11 +147,15 @@ function checkRule(checkContent, checkRule){
   }
 }
 
+
+
 function refreshResult(){
   chrome.storage.local.set({HSniffResult: HSniffResult}, function() {
     console.log('Result is ' + JSON.stringify(HSniffResult));
   });
 }
+
+
 
 function tabsOnActiveChangedListener(tabId, selectInfo) {
   chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
@@ -190,7 +178,6 @@ function tabsOnActiveChangedListener(tabId, selectInfo) {
 function tabsOnUpdatedListener(tabId, changeInfo, tab) {
   if(changeInfo.status == "complete" && tab.url != null){
     chrome.tabs.query({currentWindow: true, active: true}, function(tabArray) {
-      console.log(tabArray);
       if (tabArray[0].id != null && tabArray[0].id == tab.id){
         let hhost = tab.url.split('/')[2]
         if (HSniffResult.shost != hhost){
@@ -212,10 +199,28 @@ function tabsOnUpdatedListener(tabId, changeInfo, tab) {
   }
 }
 
+
+
 function initCheckMonitor(){
   chrome.webRequest.onBeforeRequest.addListener(webRequestOnbeforeRequestListener, {urls: ["http://*/*","https://*/*"]}, ["requestBody","extraHeaders", "blocking"]);
   chrome.webRequest.onBeforeSendHeaders.addListener(webRequestOnBeforeSendHeadersListener, {urls: ["http://*/*","https://*/*"]}, ["requestHeaders","extraHeaders"]);
   chrome.webRequest.onResponseStarted.addListener(webRequestOnResponseStartedListener, {urls: ["<all_urls>"]}, ["responseHeaders","extraHeaders"]);
+}
+
+function deleteCheckMonitor(){
+  chrome.webRequest.onBeforeRequest.removeListener(webRequestOnbeforeRequestListener);
+  chrome.webRequest.onBeforeSendHeaders.removeListener(webRequestOnBeforeSendHeadersListener);
+  chrome.webRequest.onResponseStarted.removeListener(webRequestOnResponseStartedListener);
+  console.log("存在监听器",chrome.webRequest.onResponseStarted.hasListener(webRequestOnResponseStartedListener))
+  if (chrome.tabs.onActivated.hasListener(responseBodyCheckListener)){
+    chrome.tabs.onActivated.removeListener(responseBodyCheckListener)
+    if (nowTabs != -999) {
+      chrome.debugger.detach({tabId: nowTabs})
+    }
+  }
+  if (chrome.debugger.onEvent.hasListener(allNetworkEventHandler)) {
+    chrome.debugger.onEvent.removeListener(allNetworkEventHandler)
+  }
 }
 
 function setResponseCheckListener(){
@@ -237,29 +242,20 @@ function setResponseCheckListener(){
 
 }
 
-
 function webRequestOnbeforeRequestListener(details) {
   if(details.type == 'main_frame' || details.type == 'sub_frame' || details.type == 'script' || details.type == 'xmlhttprequest' || details.type == 'other' || details.type == 'object'){
     // url check
     for ( let i of HPrinter.position1 ) {
       let checkResult = checkRule(details.url,i.rulecontent)
       if (checkResult == true){
-        if (i.type == 4 && HSniffResult.shost.search(i.rulecontent) != -1) {
-          // 匹配蜜罐规则，但是访问网站本身就是规则指向的网站，此时不做处理
-        } else {
-          let nowResult
-          if (details.initiator != null) {
-            nowResult = {sid: i.type, scontent: i.commandments, sshost: details.initiator.split('/')[2]}
-          } else if (details.type == "main_frame" && details.url != null){
-            nowResult = {sid: i.type, scontent: i.commandments, sshost: details.url.split('/')[2]}
-          }
-          if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
-            HSniffResult.sresult.push(nowResult)
-            refreshResult()
-          }
-          if (i.type == 4 && HConfig.blockHoneypot == true){
-            return {cancel: true}; 
-          }
+        let nowResult
+        nowResult = {sid: i.type, scontent: i.commandments, sshost: getRealHost(details)}
+        if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
+          HSniffResult.sresult.push(nowResult)
+          refreshResult()
+        }
+        if (i.type == 4 && HConfig.blockHoneypot == true){
+          return {cancel: true}; 
         }
       }
     }
@@ -275,7 +271,7 @@ function webRequestOnbeforeRequestListener(details) {
           requestBodyContent = decodeURIComponent(encodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes))))
         } else {
           //other
-          for ( let i of details.requestBody.raw ) {
+          for (let i of details.requestBody.raw) {
             if (i.bytes != null){
               requestBodyContent = requestBodyContent + decodeURIComponent(encodeURIComponent(String.fromCharCode.apply(null, new Uint8Array(details.requestBody.raw[0].bytes))))
             } else {
@@ -289,7 +285,7 @@ function webRequestOnbeforeRequestListener(details) {
       for ( let i of HPrinter.position3 ) {
         let checkResult = checkRule(requestBodyContent,i.rulecontent)
         if (checkResult == true){
-          let nowResult = {sid: i.type, scontent: i.commandments, sshost: details.initiator.split('/')[2]}
+          let nowResult = {sid: i.type, scontent: i.commandments, sshost: getRealHost(details)}
           if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
             HSniffResult.sresult.push(nowResult)
             refreshResult()
@@ -298,6 +294,7 @@ function webRequestOnbeforeRequestListener(details) {
       }
     }
   } else if (details.type == 'websocket' || details.type == 'stylesheet' || details.type == 'image' || details.type == 'media' || details.type == 'font'  || details.type == 'csp_report' || details.type == 'ping'){}
+    //其他类型的请求，暂不处理
 }
 
 function webRequestOnBeforeSendHeadersListener(details) {
@@ -308,17 +305,23 @@ function webRequestOnBeforeSendHeadersListener(details) {
     }
     for ( let i of HPrinter.position2 ) {
       if (nowlist.indexOf(i.rulecontent.name) != -1){
-        let checkResult = checkRule(details.requestHeaders[nowlist.indexOf(i.rulecontent.name)].value,i.rulecontent.value)
-        if (checkResult == true){
-          let nowResult = {sid: i.type, scontent: i.commandments, sshost: details.initiator.split('/')[2]}
-          if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
-            HSniffResult.sresult.push(nowResult)
-            refreshResult()
+        for (let j=0; j<nowlist.length; j++){
+          if (nowlist[j] == i.rulecontent.name){
+            let checkResult = checkRule(details.requestHeaders[j].value,i.rulecontent.value)
+            if (checkResult == true){
+              let nowResult = {sid: i.type, scontent: i.commandments, sshost: getRealHost(details)}
+              if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
+                HSniffResult.sresult.push(nowResult)
+                refreshResult()
+              }
+              break
+            }
           }
         }
       }
     } 
   } else if (details.type == 'websocket' || details.type == 'stylesheet' || details.type == 'image' || details.type == 'media' || details.type == 'font'  || details.type == 'csp_report' || details.type == 'ping'){}
+    //其他类型的请求，暂不处理
 }
 
 function webRequestOnResponseStartedListener(details) {
@@ -329,17 +332,23 @@ function webRequestOnResponseStartedListener(details) {
     }
     for ( let i of HPrinter.position4 ) {
       if (nowlist.indexOf(i.rulecontent.name) != -1){
-        let checkResult = checkRule(details.responseHeaders[nowlist.indexOf(i.rulecontent.name)].value,i.rulecontent.value)
-        if (checkResult == true){
-          let nowResult = {sid: i.type, scontent: i.commandments, sshost: details.initiator.split('/')[2]}
-          if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
-            HSniffResult.sresult.push(nowResult)
-            refreshResult()
+        for (let j=0; j<nowlist.length; j++){
+          if (nowlist[j] == i.rulecontent.name){
+            let checkResult = checkRule(details.responseHeaders[j].value,i.rulecontent.value)
+            if (checkResult == true){
+              let nowResult = {sid: i.type, scontent: i.commandments, sshost: getRealHost(details)}
+              if (!HSniffResult.sresult.some(item => { if (item.scontent == i.commandments) return true })){
+                HSniffResult.sresult.push(nowResult)
+                refreshResult()
+              }
+              break
+            }
           }
         }
       }
     } 
   } else if (details.type == 'websocket' || details.type == 'stylesheet' || details.type == 'image' || details.type == 'media' || details.type == 'font'  || details.type == 'csp_report' || details.type == 'ping'){}
+    //其他类型的请求，暂不处理 
 }
 
 
@@ -415,5 +424,14 @@ function allNetworkEventHandler(debuggerId, message, params) {
         delete responseBodyHost[params.requestId]
       }
     }
+  }
+}
+
+
+function getRealHost(details){
+  if (details.initiator != null) {
+    return details.initiator.split('/')[2]
+  } else if (details.url != null) {
+    return details.url.split('/')[2]
   }
 }

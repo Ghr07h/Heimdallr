@@ -1,8 +1,4 @@
 /*
-指纹规则文件
-已有18条指纹规则
-已有97条蜜罐规则
-
 新增指纹规则如下
 {
     rulename: "demorule",                     // 规则名命名规则： 组织-实体-特征-该类型规则序号，内容全小写，如 apache-tomcat-page-1、apache-shiro-cookie-1
@@ -168,6 +164,7 @@ var printerData = [
         rulecontent: /[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]/im,
         combinedrule: null
     },
+
 
 
 
@@ -393,7 +390,7 @@ var printerData = [
     {
         rulename: "honeypot_cnrstar_keyword_28",
         type: 4,
-        commandments:"敏感域名请求: 爱问知识人问答平台",
+        commandments:"敏感域名请求: 新浪爱问知识人问答平台",
         ruleposition: 1,
         rulecontent: /iask.sina.com.cn/im,
         combinedrule: null
@@ -753,7 +750,7 @@ var printerData = [
     {
         rulename: "honeypot_cnrstar_keyword_73",
         type: 4,
-        commandments:"敏感域名请求: 阿里短链接平台",
+        commandments:"敏感域名请求: 阿里短链接平台接口",
         ruleposition: 1,
         rulecontent: /g.alicdn.com/im,
         combinedrule: null
@@ -910,7 +907,7 @@ var printerData = [
     },
     {
         rulename: "honeypot_monyer_statisticalwebsite_13",
-        type: 5,
+        type: 4,
         commandments:"网站流量分析和跟踪请求: 友盟CNZZ网站流量统计",
         ruleposition: 1,
         rulecontent: /cnzz.com/im,
@@ -918,7 +915,7 @@ var printerData = [
     },
     {
         rulename: "honeypot_monyer_statisticalwebsite_14",
-        type: 5,
+        type: 4,
         commandments:"网站流量分析和跟踪请求: 51LA网站统计与数据分析",
         ruleposition: 1,
         rulecontent: /51.la/im,
@@ -926,7 +923,7 @@ var printerData = [
     },
     {
         rulename: "honeypot_monyer_statisticalwebsite_15",
-        type: 5,
+        type: 4,
         commandments:"网站流量分析和跟踪请求: 谷歌分析统计",
         ruleposition: 1,
         rulecontent: /google-analytics.com/im,
@@ -934,7 +931,7 @@ var printerData = [
     },
     {
         rulename: "honeypot_monyer_statisticalwebsite_16",
-        type: 5,
+        type: 4,
         commandments:"网站流量分析和跟踪请求: 谷歌访问跟踪器",
         ruleposition: 1,
         rulecontent: /googletagservices.com/im,
@@ -1050,11 +1047,160 @@ var printerData = [
         combinedrule: null
     },
     {
-        rulename: "honeypot_fuckjsonp_keyword_2",
+        rulename: "honeypot_fuckjsonp_keyword_14",
         type: 4,
         commandments:"敏感域名请求: 运营商[电信]接口2",
         ruleposition: 1,
         rulecontent: /chinatelecom.com.cn/im,
+        combinedrule: null
+    },
+
+    {
+        rulename: "honeypot_heimdallr_keyword_1",
+        type: 5,
+        commandments:"敏感关键词请求: 请求URL参数中存在jsonp常用关键词callback",
+        ruleposition: 1,
+        rulecontent: /\?.+callback\=/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_2",
+        type: 5,
+        commandments:"敏感关键词请求: 请求URL参数中存在jsonp常用关键词eval和atob",
+        ruleposition: 1,
+        rulecontent: /\?.+eval\(atob/im,
+        combinedrule: null
+    },
+
+
+
+
+    {
+        rulename: "honeypot_heimdallr_keyword_3",
+        type: 4,
+        commandments:"敏感域名请求: 超星用户接口",
+        ruleposition: 1,
+        rulecontent: /passport2.chaoxing.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_4",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口5-百度账号及设备信息接口",
+        ruleposition: 1,
+        rulecontent: /sofire.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_5",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口6-百度教育接口",
+        ruleposition: 1,
+        rulecontent: /easylearn.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_6",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口7-百度读书接口",
+        ruleposition: 1,
+        rulecontent: /yuedu.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_7",
+        type: 4,
+        commandments:"敏感域名请求: 58同城账号接口",
+        ruleposition: 1,
+        rulecontent: /employer.58.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_8",
+        type: 4,
+        commandments:"敏感域名请求: 腾讯QQ接口3-u.y.qq.com",
+        ruleposition: 1,
+        rulecontent: /u.y.qq.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_9",
+        type: 4,
+        commandments:"敏感域名请求: 超星慕课接口",
+        ruleposition: 1,
+        rulecontent: /mooc1-1.chaoxing.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_10",
+        type: 4,
+        commandments:"敏感域名请求: 58同城账号接口2",
+        ruleposition: 1,
+        rulecontent: /passport.58.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_11",
+        type: 4,
+        commandments:"敏感域名请求: 优酷接口3-download.youku.com",
+        ruleposition: 1,
+        rulecontent: /download.youku.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_12",
+        type: 4,
+        commandments:"敏感域名请求: 新浪爱问知识人接口2",
+        ruleposition: 1,
+        rulecontent: /static.iask.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_13",
+        type: 4,
+        commandments:"敏感域名请求: 苏宁易购账号接口",
+        ruleposition: 1,
+        rulecontent: /passport.suning.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_14",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口8-百度静态资源服务器账号接口",
+        ruleposition: 1,
+        rulecontent: /sofire.bdstatic.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_15",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口9-百度网盟推广接口",
+        ruleposition: 1,
+        rulecontent: /cbjs.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_16",
+        type: 4,
+        commandments:"敏感域名请求: 新浪爱问知识人接口3",
+        ruleposition: 1,
+        rulecontent: /static3.iask.cn/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_17",
+        type: 4,
+        commandments:"敏感域名请求: 百度接口10-百度手机卫士接口",
+        ruleposition: 1,
+        rulecontent: /sfp.safe.baidu.com/im,
+        combinedrule: null
+    },
+    {
+        rulename: "honeypot_heimdallr_keyword_18",
+        type: 4,
+        commandments:"敏感域名请求: 新浪爱问知识人接口4-用于获取IP及归属地信息接口",
+        ruleposition: 1,
+        rulecontent: /ipip.iask.cn/im,
         combinedrule: null
     },
 ]

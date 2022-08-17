@@ -245,6 +245,8 @@ function setResponseCheckListener(){
 function webRequestOnbeforeRequestListener(details) {
   if(details.type == 'main_frame' || details.type == 'sub_frame' || details.type == 'script' || details.type == 'xmlhttprequest' || details.type == 'other' || details.type == 'object'){
     // url check
+    // 用于添加规则时获取jsonp域名
+    // console.log(99999999,details.url)
     for ( let i of HPrinter.position1 ) {
       let checkResult = checkRule(details.url,i.rulecontent)
       if (checkResult == true){

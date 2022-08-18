@@ -31,9 +31,33 @@ var printerData = [
     {
         rulename: "baidu_ueditor_keyword_3",
         type: 2,
-        commandments:"Ueditor: 检测到关键字[ueditor]",
+        commandments:"Ueditor: 响应体中检测到关键字[ueditor]",
         ruleposition: 5,
-        rulecontent: /tomcat/im,
+        rulecontent: /ueditor/im,
+        combinedrule: null
+    },
+    {
+        rulename: "baidu_ueditor_configurl_4",
+        type: 1,
+        commandments:"Ueditor: 加载Ueditor配置文件ueditor.all.min.js",
+        ruleposition: 1,
+        rulecontent: /ueditor.all.min.js/im,
+        combinedrule: null
+    },
+    {
+        rulename: "baidu_ueditor_configurl_5",
+        type: 1,
+        commandments:"Ueditor: 加载Ueditor配置文件ueditor.config.min.js",
+        ruleposition: 1,
+        rulecontent: /ueditor.config.min.js/im,
+        combinedrule: null
+    },
+    {
+        rulename: "baidu_ueditor_keyword_6",
+        type: 2,
+        commandments:"Ueditor: 请求路径中检测到关键字[ueditor]",
+        ruleposition: 1,
+        rulecontent: /ueditor/im,
         combinedrule: null
     },
     {

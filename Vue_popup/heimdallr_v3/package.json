@@ -1,0 +1,19 @@
+{
+  "name": "heimdallr_v3",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "nodemon --watch src --exec npm run build --ext \"ts,vue\"",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "element-plus": "^2.2.16",
+    "vue": "^3.2.38"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.3",
+    "nodemon": "^2.0.19",
+    "vite": "^3.0.9"
+  }
+}

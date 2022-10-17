@@ -1,0 +1,53 @@
+{
+    "name": "Heimdallr",
+    "author": "Ghroth",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Identify fingerprint & Anti honeypot",
+    "icons": { 
+      "16": "resource/img/icon/ico.png",
+      "48": "resource/img/icon/ico.png",
+     "128": "resource/img/icon/ico.png" 
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_title": "Heimdallr",
+      "default_icon": "resource/img/icon/ico.png",
+      "default_popup": "resource/popup/index.html"
+    },
+    "options_ui": {
+      "page": "resource/popup/index.html#setting",
+      "open_in_tab": false
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "webRequest",
+        "declarativeNetRequest",
+        "contextMenus",
+        "browsingData",
+        "debugger",
+        "notifications",
+        "privacy",
+        "scripting"
+    ],
+    "host_permissions": [
+      "http://*/*",
+      "https://*/*"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "/resource/inject/content.js" ],
+        "matches": [ "https://*/*","http://*/*","file://*/*" ],
+        "use_dynamic_url": true
+      }
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' ;  object-src 'self'",
+      "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self'"
+    },
+    "homepage_url": "https://github.com/graynjo/Heimdallr",
+    "key":"xxxx"
+}

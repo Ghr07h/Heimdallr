@@ -4,10 +4,9 @@
 
 同时进行了evercookie、webRTC、Canvas画布等溯源特征的对抗
 
-![image-20220818000347564](README.assets/image-20220818000347564.png)
+![image-20221017154419189](README.assets/image-20221017154419189.png)
 
-![image-20220814220214770](README.assets/image-20220814220214770.png)
-
+![image-20221017154934546](README.assets/image-20221017154934546.png)
 
 ## 安装
 
@@ -20,9 +19,10 @@
 ## 使用
 
 1. 高危指纹识别和蜜罐jsonp请求识别功能无需配置，只要插件开启即可生效
-    - 高危指纹识别规则103条：涉及框架或产品如下
+    - 高危指纹识别规则103条，涉及框架或产品如下：
         - ueditor、struts2、spring、weblogic、shiro、F5 BIG-IP、致远OA、用友NC、用友畅捷通、通达OA、心通达OA、新点OA、帆软报表、蓝凌OA、红帆OA、华天动力OA、万户OA、金蝶云、协众OA、金和OA、海昌OA、泛微多个产品(ecology、eoffice、ebridge、emobile)、拓尔思SSO、拓尔思内容管理系统、亿邮邮件、coremail邮件、Exchange邮件、若依后台管理系统、Wordpress、小鱼易连云视讯、tomcat、iis、jboss、jetty、ibm websphere、weblogic、thinkphp、showdoc、Laravel、kindeditor、fckeditor、ewebeditor、jeesite、海康威视多个产品（网络摄像头、安防管理平台、图像综合应用平台）、dedecms、jira、confluence、java web、博达站群、dubbo、向日葵客户端、宝塔waf、宝塔面板、米拓cms、teleport堡垒机、齐治堡垒机、帕拉迪堡垒机、H3C堡垒机、绿盟防火墙、安全狗Waf
     - 蜜罐特征告警规则133条，涉及敏感域名请求(jsonp)、蜜罐资源特征、网站流量分析与跟踪请求、敏感关键词、敏感脚本调用等
+        - 因部分框架或产品（如百度网站在线客服会调用5个json敏感域名、高德地图web嵌入会调用高德域名）的正常使用也会出现Jsonp敏感域名的访问，故同一站点的Jsonp请求超过10个时，基本可以确定为蜜罐站点，此时将会出现系统弹窗告警（弹窗需要操作系统开启浏览器弹窗权限，该权限默认开启）。
 2. 右上角三个选项分别为暂停/开启插件、刷新所有嗅探结果集、跳转设置界面（内容同策略配置标签）
 3. 扩展功能可参考策略配置页面
     - 被动识别配置

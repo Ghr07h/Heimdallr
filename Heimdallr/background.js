@@ -118,7 +118,7 @@ function checkSelectFunction(){
       }) 
     } else {
       chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
-        if (currentRules.length == HBlockingDomainRulesIds.length) {
+        if (currentRules.length != 0) {
           chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
         } else {
           console.log("无需删除，Blocking规则不存在")
@@ -163,7 +163,7 @@ function checkSelectFunction(){
     // 插件关闭，蜜罐拦截功能随之关闭，但配置仍然为true
     if (HConfig.blockHoneypot == true) {
       chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
-        if (currentRules.length == HBlockingDomainRulesIds.length) {
+        if (currentRules.length != 0) {
           chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
         } else {
           console.log("无需删除，Blocking规则不存在")
@@ -279,7 +279,7 @@ function storageOnChangedListener(changes, areaname) {
         } else {
           // 暂停拦截
           chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
-            if (currentRules.length == HBlockingDomainRulesIds.length) {
+            if (currentRules.length != 0) {
               chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
             } else {
               console.log("无需删除，Blocking规则不存在")
@@ -507,7 +507,7 @@ function deleteCheckMonitor(){
 
   if (HConfig.blockHoneypot == true) {
     chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
-      if (currentRules.length == HBlockingDomainRulesIds.length) {
+      if (currentRules.length != 0) {
         chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
       } else {
         console.log("无需删除，Blocking规则不存在")

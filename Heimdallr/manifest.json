@@ -3,7 +3,7 @@
     "author": "Ghroth",
     "version": "1.0",
     "manifest_version": 3,
-    "description": "Identify fingerprint & Anti honeypot",
+    "description": "指纹识别、反蜜罐、特征对抗 | Identify fingerprint & Anti honeypot & Anti features",
     "icons": { 
       "16": "resource/img/icon/ico.png",
       "48": "resource/img/icon/ico.png",

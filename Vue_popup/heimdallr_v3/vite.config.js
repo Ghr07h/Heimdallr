@@ -13,6 +13,6 @@ export default defineConfig({
   },
   base: "./",
   build: {
-    outDir: '../../Heimdallr_v3/resource/popup'
+    outDir: '../../Heimdallr/resource/popup'
   },
 })

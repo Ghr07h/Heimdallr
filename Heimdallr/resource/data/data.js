@@ -8,6 +8,7 @@
     commandments:"Tomcat: default example page",    // 显示的告警或指纹信息，要求不可与已有规则的告警内容重复
     ruleposition: 1,                        // 1：请求url；2：请求头；3：请求体；4：响应头；5：响应体
     rulecontent:/rex1/im,         // 非heade类型的规则的正则表达式内容，按照js的rex规则编写，斜杠尾部自行添加flag参数（一般使用im，忽略大小写的多行匹配），斜杠内特殊字符需转义
+    //蜜罐拦截类jsonp直接写域名即可，不可使用反斜杠等rex元字符
     //rulecontent: {"name":"Cookie","value":/deleteMe/im }          // ruleposition为2或4的指纹，即header name与header value
 }
 */
@@ -850,630 +851,630 @@ var printerData = [
         type: 4,
         commandments:"敏感域名请求: ITPUB技术论坛",
         ruleposition: 1,
-        rulecontent: /itpub\.net/im
+        rulecontent: /itpub.net/im
     },
     {
         rulename: "h2_cnrstar_domain_url_2",
         type: 4,
         commandments:"敏感域名请求: 携程旅行",
         ruleposition: 1,
-        rulecontent: /ctrip\.com/im
+        rulecontent: /ctrip.com/im
     },
     {
         rulename: "h3_cnrstar_domain_url_3",
         type: 4,
         commandments:"敏感域名请求: 携程旅行接口",
         ruleposition: 1,
-        rulecontent: /c\-ctrip\.com/im
+        rulecontent: /c-ctrip.com/im
     },
     {
         rulename: "h4_cnrstar_domain_url_4",
         type: 4,
         commandments:"敏感域名请求: 千图网",
         ruleposition: 1,
-        rulecontent: /58pic\.com/im
+        rulecontent: /58pic.com/im
     },
     {
         rulename: "h5_cnrstar_domain_url_5",
         type: 4,
         commandments:"敏感域名请求: CSDN",
         ruleposition: 1,
-        rulecontent: /csdn\.net/im
+        rulecontent: /csdn.net/im
     },
     {
         rulename: "h6_cnrstar_domain_url_6",
         type: 4,
         commandments:"敏感域名请求: IP.sb接口",
         ruleposition: 1,
-        rulecontent: /api\.ip\.sb/im
+        rulecontent: /api.ip.sb/im
     },
     {
         rulename: "h7_cnrstar_domain_url_7",
         type: 4,
         commandments:"敏感域名请求: 聚力PPTV网络电视",
         ruleposition: 1,
-        rulecontent: /pptv\.com/im
+        rulecontent: /pptv.com/im
     },
     {
         rulename: "h8_cnrstar_domain_url_8",
         type: 4,
         commandments:"敏感域名请求: 直播吧",
         ruleposition: 1,
-        rulecontent: /zhibo8\.cc/im
+        rulecontent: /zhibo8.cc/im
     },
     {
         rulename: "h9_cnrstar_domain_url_9",
         type: 4,
         commandments:"敏感域名请求: bit.ly短链接服务",
         ruleposition: 1,
-        rulecontent: /bit\.ly/im
+        rulecontent: /bit.ly/im
     },
     {
         rulename: "h10_cnrstar_domain_url_10",
         type: 4,
         commandments:"敏感域名请求: 腾讯NOW直播平台",
         ruleposition: 1,
-        rulecontent: /now\.qq\.com/im
+        rulecontent: /now.qq.com/im
     },
     {
         rulename: "h11_cnrstar_domain_url_11",
         type: 4,
         commandments:"敏感域名请求: 腾讯QQ接口1-c.v.qq.com",
         ruleposition: 1,
-        rulecontent: /c\.v\.qq\.com/im
+        rulecontent: /c.v.qq.com/im
     },
     {
         rulename: "h12_cnrstar_domain_url_12",
         type: 4,
         commandments:"敏感域名请求: 腾讯QQ接口2-node.video.qq.com",
         ruleposition: 1,
-        rulecontent: /node\.video\.qq\.com/im
+        rulecontent: /node.video.qq.com/im
     },
     {
         rulename: "h13_cnrstar_domain_url_13",
         type: 4,
         commandments:"敏感域名请求: ChinaUnix IT技术博客",
         ruleposition: 1,
-        rulecontent: /chinaunix\.net/im
+        rulecontent: /chinaunix.net/im
     },
     {
         rulename: "h14_cnrstar_domain_url_14",
         type: 4,
         commandments:"敏感域名请求: 优酷接口1-cmstool.youku.com",
         ruleposition: 1,
-        rulecontent: /cmstool\.youku\.com/im
+        rulecontent: /cmstool.youku.com/im
     },
     {
         rulename: "h15_cnrstar_domain_url_15",
         type: 4,
         commandments:"敏感域名请求: 优酷接口2-hudong.vip.youku.com",
         ruleposition: 1,
-        rulecontent: /hudong\.vip\.youku\.com/im
+        rulecontent: /hudong.vip.youku.com/im
     },
     {
         rulename: "h16_cnrstar_domain_url_16",
         type: 4,
         commandments:"敏感域名请求: 网易跟帖",
         ruleposition: 1,
-        rulecontent: /tie\.163\.com/im
+        rulecontent: /tie.163.com/im
     },
     {
         rulename: "h17_cnrstar_domain_url_17",
         type: 4,
         commandments:"敏感域名请求: 网易163接口1-comment.api.163.com",
         ruleposition: 1,
-        rulecontent: /comment\.api\.163\.com/im
+        rulecontent: /comment.api.163.com/im
     },
     {
         rulename: "h18_cnrstar_domain_url_18",
         type: 4,
         commandments:"敏感域名请求: 网易163接口2-comment.money.163.com",
         ruleposition: 1,
-        rulecontent: /comment\.money\.163\.com/im
+        rulecontent: /comment.money.163.com/im
     },
     {
         rulename: "h19_cnrstar_domain_url_19",
         type: 4,
         commandments:"敏感域名请求: 当当网",
         ruleposition: 1,
-        rulecontent: /dangdang\.com/im
+        rulecontent: /dangdang.com/im
     },
     {
         rulename: "h20_cnrstar_domain_url_20",
         type: 4,
         commandments:"敏感域名请求: UC浏览器",
         ruleposition: 1,
-        rulecontent: /down2\.uc\.cn/im
+        rulecontent: /down2.uc.cn/im
     },
     {
         rulename: "h21_cnrstar_domain_url_21",
         type: 4,
         commandments:"敏感域名请求: Github",
         ruleposition: 1,
-        rulecontent: /github\.com/im
+        rulecontent: /github.com/im
     },
     {
         rulename: "h22_cnrstar_domain_url_22",
         type: 4,
         commandments:"敏感域名请求: Github接口1-mozilla.github.io",
         ruleposition: 1,
-        rulecontent: /mozilla\.github\.io/im
+        rulecontent: /mozilla.github.io/im
     },
     {
         rulename: "h23_cnrstar_domain_url_23",
         type: 4,
         commandments:"敏感域名请求: 虎牙直播",
         ruleposition: 1,
-        rulecontent: /huya\.com/im
+        rulecontent: /huya.com/im
     },
     {
         rulename: "h24_cnrstar_domain_url_24",
         type: 4,
         commandments:"敏感域名请求: 51CTO接口1-home.51cto.com",
         ruleposition: 1,
-        rulecontent: /home\.51cto\.com/im
+        rulecontent: /home.51cto.com/im
     },
     {
         rulename: "h25_cnrstar_domain_url_25",
         type: 4,
         commandments:"敏感域名请求: 51CTO接口2-ucenter.51cto.com",
         ruleposition: 1,
-        rulecontent: /ucenter\.51cto\.com/im
+        rulecontent: /ucenter.51cto.com/im
     },
     {
         rulename: "h26_cnrstar_domain_url_26",
         type: 4,
         commandments:"敏感域名请求: 城通网盘",
         ruleposition: 1,
-        rulecontent: /ctfile\.com/im
+        rulecontent: /ctfile.com/im
     },
     {
         rulename: "h27_cnrstar_domain_url_27",
         type: 4,
         commandments:"敏感域名请求: 金融界财经金融门户",
         ruleposition: 1,
-        rulecontent: /jrj\.com\.cn/im
+        rulecontent: /jrj.com.cn/im
     },
     {
         rulename: "h28_cnrstar_domain_url_28",
         type: 4,
         commandments:"敏感域名请求: 新浪爱问知识人问答平台",
         ruleposition: 1,
-        rulecontent: /iask\.sina\.com\.cn/im
+        rulecontent: /iask.sina.com.cn/im
     },
     {
         rulename: "h29_cnrstar_domain_url_29",
         type: 4,
         commandments:"敏感域名请求: 新浪接口1-ka.sina.com.cn",
         ruleposition: 1,
-        rulecontent: /ka\.sina\.com\.cn/im
+        rulecontent: /ka.sina.com.cn/im
     },
     {
         rulename: "h30_cnrstar_domain_url_30",
         type: 4,
         commandments:"敏感域名请求: 新浪接口2-新浪用户接口",
         ruleposition: 1,
-        rulecontent: /login\.sina\.com\.cn/im
+        rulecontent: /login.sina.com.cn/im
     },
     {
         rulename: "h31_cnrstar_domain_url_31",
         type: 4,
         commandments:"敏感域名请求: 苹果itunes接口",
         ruleposition: 1,
-        rulecontent: /itunes\.apple\.com/im
+        rulecontent: /itunes.apple.com/im
     },
     {
         rulename: "h32_cnrstar_domain_url_32",
         type: 4,
         commandments:"敏感域名请求: 新浪微博接口1-m.game.weibo.cn",
         ruleposition: 1,
-        rulecontent: /m\.game\.weibo\.cn/im
+        rulecontent: /m.game.weibo.cn/im
     },
     {
         rulename: "h33_cnrstar_domain_url_33",
         type: 4,
         commandments:"敏感域名请求: 新浪微博接口2-i.qr.weibo.cn",
         ruleposition: 1,
-        rulecontent: /i\.qr\.weibo\.cn/im
+        rulecontent: /i.qr.weibo.cn/im
     },
     {
         rulename: "h34_cnrstar_domain_url_34",
         type: 4,
         commandments:"敏感域名请求: 新浪微博",
         ruleposition: 1,
-        rulecontent: /weibo\.com/im
+        rulecontent: /weibo.com/im
     },
     {
         rulename: "h35_cnrstar_domain_url_35",
         type: 4,
         commandments:"敏感域名请求: ZOL中关村在线",
         ruleposition: 1,
-        rulecontent: /my\.zol\.com\.cn/im
+        rulecontent: /my.zol.com.cn/im
     },
     {
         rulename: "h36_cnrstar_domain_url_36",
         type: 4,
         commandments:"敏感域名请求: 人人网",
         ruleposition: 1,
-        rulecontent: /renren\.com/im
+        rulecontent: /renren.com/im
     },
     {
         rulename: "h37_cnrstar_domain_url_37",
         type: 4,
         commandments:"敏感域名请求: 爱奇艺",
         ruleposition: 1,
-        rulecontent: /iqiyi\.com/im
+        rulecontent: /iqiyi.com/im
     },
     {
         rulename: "h38_cnrstar_domain_url_38",
         type: 4,
         commandments:"敏感域名请求: 爱奇艺接口1-stc.iqiyipic.com",
         ruleposition: 1,
-        rulecontent: /stc\.iqiyipic\.com/im
+        rulecontent: /stc.iqiyipic.com/im
     },
     {
         rulename: "h39_cnrstar_domain_url_39",
         type: 4,
         commandments:"敏感域名请求: 芒果TV",
         ruleposition: 1,
-        rulecontent: /playbill\.api\.mgtv\.com/im
+        rulecontent: /playbill.api.mgtv.com/im
     },
     {
         rulename: "h40_cnrstar_domain_url_40",
         type: 4,
         commandments:"敏感域名请求: skylink即时通讯和视频聊天",
         ruleposition: 1,
-        rulecontent: /skylink\.io/im
+        rulecontent: /skylink.io/im
     },
     {
         rulename: "h41_cnrstar_domain_url_41",
         type: 4,
         commandments:"敏感域名请求: 飞卢小说接口1-s.faloo.com",
         ruleposition: 1,
-        rulecontent: /s\.faloo\.com/im
+        rulecontent: /s.faloo.com/im
     },
     {
         rulename: "h42_cnrstar_domain_url_42",
         type: 4,
         commandments:"敏感域名请求: 飞卢小说接口2-u.faloo.com",
         ruleposition: 1,
-        rulecontent: /u\.faloo\.com/im
+        rulecontent: /u.faloo.com/im
     },
     {
         rulename: "h43_cnrstar_domain_url_43",
         type: 4,
         commandments:"敏感域名请求: 搜狐网",
         ruleposition: 1,
-        rulecontent: /v2\.sohu\.com/im
+        rulecontent: /v2.sohu.com/im
     },
     {
         rulename: "h44_cnrstar_domain_url_44",
         type: 4,
         commandments:"敏感域名请求: 搜狐号",
         ruleposition: 1,
-        rulecontent: /uis\.i\.sohu\.com/im
+        rulecontent: /uis.i.sohu.com/im
     },
     {
         rulename: "h45_cnrstar_domain_url_45",
         type: 4,
         commandments:"敏感域名请求: 搜狗搜索",
         ruleposition: 1,
-        rulecontent: /wap\.sogou\.com/im
+        rulecontent: /wap.sogou.com/im
     },
     {
         rulename: "h46_cnrstar_domain_url_46",
         type: 4,
         commandments:"敏感域名请求: ITeye软件开发交流社区",
         ruleposition: 1,
-        rulecontent: /www\.iteye\.com/im
+        rulecontent: /www.iteye.com/im
     },
     {
         rulename: "h47_cnrstar_domain_url_47",
         type: 4,
         commandments:"敏感域名请求: 猪八戒网外包平台",
         ruleposition: 1,
-        rulecontent: /www\.zbj\.com/im
+        rulecontent: /www.zbj.com/im
     },
     {
         rulename: "h48_cnrstar_domain_url_48",
         type: 4,
         commandments:"敏感域名请求: 美橙互联：域名注册、VPS、企业网站服务",
         ruleposition: 1,
-        rulecontent: /cndns\.com/im
+        rulecontent: /cndns.com/im
     },
     {
         rulename: "h49_cnrstar_domain_url_49",
         type: 4,
         commandments:"敏感域名请求: 美橙互联：建站之星",
         ruleposition: 1,
-        rulecontent: /sitestar\.cn/im
+        rulecontent: /sitestar.cn/im
     },
     {
         rulename: "h50_cnrstar_domain_url_50",
         type: 4,
         commandments:"敏感域名请求: FastAdmin后台开发框架官网接口",
         ruleposition: 1,
-        rulecontent: /api\.fastadmin\.net/im
+        rulecontent: /api.fastadmin.net/im
     },
     {
         rulename: "h51_cnrstar_domain_url_51",
         type: 4,
         commandments:"敏感域名请求: 百度接口1-m.site.baidu.com",
         ruleposition: 1,
-        rulecontent: /m\.site\.baidu\.com/im
+        rulecontent: /m.site.baidu.com/im
     },
     {
         rulename: "h52_cnrstar_domain_url_52",
         type: 4,
         commandments:"敏感域名请求: 百度接口2-账号接口",
         ruleposition: 1,
-        rulecontent: /passport\.baidu\.com/im
+        rulecontent: /passport.baidu.com/im
     },
     {
         rulename: "h53_cnrstar_domain_url_53",
         type: 4,
         commandments:"敏感域名请求: 百度接口3-wappassalltest.baidu.com",
         ruleposition: 1,
-        rulecontent: /wappassalltest\.baidu\.com/im
+        rulecontent: /wappassalltest.baidu.com/im
     },
     {
         rulename: "h54_cnrstar_domain_url_54",
         type: 4,
         commandments:"敏感域名请求: 百度百科",
         ruleposition: 1,
-        rulecontent: /baike\.baidu\.com/im
+        rulecontent: /baike.baidu.com/im
     },
     {
         rulename: "h55_cnrstar_domain_url_55",
         type: 4,
         commandments:"敏感域名请求: 百度商桥企业营销及在线客服接口",
         ruleposition: 1,
-        rulecontent: /p\.qiao\.baidu\.com/im
+        rulecontent: /p.qiao.baidu.com/im
     },
     {
         rulename: "h56_cnrstar_domain_url_56",
         type: 4,
         commandments:"敏感域名请求: 百度地图",
         ruleposition: 1,
-        rulecontent: /map\.baidu\.com/im
+        rulecontent: /map.baidu.com/im
     },
     {
         rulename: "h57_cnrstar_domain_url_57",
         type: 4,
         commandments:"敏感域名请求: 百度接口4-datax.baidu.com",
         ruleposition: 1,
-        rulecontent: /datax\.baidu\.com/im
+        rulecontent: /datax.baidu.com/im
     },
     {
         rulename: "h58_cnrstar_domain_url_58",
         type: 4,
         commandments:"敏感域名请求: 百度贴吧",
         ruleposition: 1,
-        rulecontent: /tieba\.baidu\.com/im
+        rulecontent: /tieba.baidu.com/im
     },
     {
         rulename: "h59_cnrstar_domain_url_59",
         type: 4,
         commandments:"敏感域名请求: 百度支付：度小满钱包",
         ruleposition: 1,
-        rulecontent: /zhifu\.baidu\.com/im
+        rulecontent: /zhifu.baidu.com/im
     },
     {
         rulename: "h60_cnrstar_domain_url_60",
         type: 4,
         commandments:"敏感域名请求: 高德地图RESTful接口",
         ruleposition: 1,
-        rulecontent: /restapi\.amap\.com/im
+        rulecontent: /restapi.amap.com/im
     },
     {
         rulename: "h61_cnrstar_domain_url_61",
         type: 4,
         commandments:"敏感域名请求: 千千静听",
         ruleposition: 1,
-        rulecontent: /musicapi\.taihe\.com/im
+        rulecontent: /musicapi.taihe.com/im
     },
     {
         rulename: "h62_cnrstar_domain_url_62",
         type: 4,
         commandments:"敏感域名请求: 京东商城",
         ruleposition: 1,
-        rulecontent: /api\.m\.jd\.com/im
+        rulecontent: /api.m.jd.com/im
     },
     {
         rulename: "h63_cnrstar_domain_url_63",
         type: 4,
         commandments:"敏感域名请求: 凤凰网接口1-so.v.ifeng.com",
         ruleposition: 1,
-        rulecontent: /so\.v\.ifeng\.com/im
+        rulecontent: /so.v.ifeng.com/im
     },
     {
         rulename: "h64_cnrstar_domain_url_64",
         type: 4,
         commandments:"敏感域名请求: 凤凰网接口2-stadig.ifeng.com",
         ruleposition: 1,
-        rulecontent: /stadig\.ifeng\.com/im
+        rulecontent: /stadig.ifeng.com/im
     },
     {
         rulename: "h65_cnrstar_domain_url_65",
         type: 4,
         commandments:"敏感域名请求: 博客园接口1-wz.cnblogs.com",
         ruleposition: 1,
-        rulecontent: /wz\.cnblogs\.com/im
+        rulecontent: /wz.cnblogs.com/im
     },
     {
         rulename: "h66_cnrstar_domain_url_66",
         type: 4,
         commandments:"敏感域名请求: 博客园接口2-passport.cnblogs.com",
         ruleposition: 1,
-        rulecontent: /passport\.cnblogs\.com/im
+        rulecontent: /passport.cnblogs.com/im
     },
     {
         rulename: "h67_cnrstar_domain_url_67",
         type: 4,
         commandments:"敏感域名请求: 博客园接口3-account.cnblogs.com",
         ruleposition: 1,
-        rulecontent: /account\.cnblogs\.com/im
+        rulecontent: /account.cnblogs.com/im
     },
     {
         rulename: "h68_cnrstar_domain_url_68",
         type: 4,
         commandments:"敏感域名请求: 疑似开发人员博客-mths.be",
         ruleposition: 1,
-        rulecontent: /mths\.be/im
+        rulecontent: /mths.be/im
     },
     {
         rulename: "h69_cnrstar_domain_url_69",
         type: 5,
         commandments:"敏感域名请求: 疑似表单验证和密码加密框架",
         ruleposition: 1,
-        rulecontent: /validity\.thatscaptaintoyou\.com/im
+        rulecontent: /validity.thatscaptaintoyou.com/im
     },
     {
         rulename: "h70_cnrstar_domain_url_70",
         type: 4,
         commandments:"敏感域名请求: ScorecardResearch互联网行为分析",
         ruleposition: 1,
-        rulecontent: /sb\.scorecardresearch\.com/im
+        rulecontent: /sb.scorecardresearch.com/im
     },
     {
         rulename: "h71_cnrstar_domain_url_71",
         type: 4,
         commandments:"敏感域名请求: Growing企业级数据接口(多个社交网站使用)",
         ruleposition: 1,
-        rulecontent: /assets\.growingio\.com/im
+        rulecontent: /assets.growingio.com/im
     },
     {
         rulename: "h72_cnrstar_domain_url_72",
         type: 4,
         commandments:"敏感域名请求: GNU操作系统",
         ruleposition: 1,
-        rulecontent: /gnu\.org/im
+        rulecontent: /gnu.org/im
     },
     {
         rulename: "h73_cnrstar_domain_url_73",
         type: 4,
         commandments:"敏感域名请求: 阿里短链接平台接口",
         ruleposition: 1,
-        rulecontent: /g\.alicdn\.com/im
+        rulecontent: /g.alicdn.com/im
     },
     {
         rulename: "h74_cnrstar_domain_url_74",
         type: 4,
         commandments:"敏感域名请求: 爱奇艺接口2-msg.qy.net",
         ruleposition: 1,
-        rulecontent: /msg\.qy\.net/im
+        rulecontent: /msg.qy.net/im
     },
     {
         rulename: "h75_cnrstar_domain_url_75",
         type: 4,
         commandments:"敏感域名请求: 电动志趣享",
         ruleposition: 1,
-        rulecontent: /github\.comgithub\.com/im
+        rulecontent: /github.comgithub.com/im
     },
     {
         rulename: "h76_cnrstar_domain_url_76",
         type: 4,
         commandments:"敏感域名请求: 天涯论坛",
         ruleposition: 1,
-        rulecontent: /tianya\.cn/im
+        rulecontent: /tianya.cn/im
     },
     {
         rulename: "h77_cnrstar_domain_url_77",
         type: 4,
         commandments:"敏感域名请求: 猫扑网",
         ruleposition: 1,
-        rulecontent: /passport\.mop\.com/im
+        rulecontent: /passport.mop.com/im
     },
     {
         rulename: "h78_cnrstar_domain_url_78",
         type: 4,
         commandments:"敏感域名请求: 1616上网导航",
         ruleposition: 1,
-        rulecontent: /chaxun\.1616\.net/im
+        rulecontent: /chaxun.1616.net/im
     },
     {
         rulename: "h79_cnrstar_domain_url_79",
         type: 4,
         commandments:"敏感域名请求: 虎扑论坛",
         ruleposition: 1,
-        rulecontent: /remind\.hupu\.com/im
+        rulecontent: /remind.hupu.com/im
     },
     {
         rulename: "h80_cnrstar_domain_url_80",
         type: 4,
         commandments:"敏感域名请求: 哔哩哔哩动画",
         ruleposition: 1,
-        rulecontent: /bilibili\.com/im
+        rulecontent: /bilibili.com/im
     },
     {
         rulename: "h81_cnrstar_domain_url_81",
         type: 4,
         commandments:"敏感域名请求: 阿里接口极有家装修平台",
         ruleposition: 1,
-        rulecontent: /jiyoujia\.com/im
+        rulecontent: /jiyoujia.com/im
     },
     {
         rulename: "h82_monyer_domain_url_1",
         type: 4,
         commandments:"敏感域名请求: 360天御企业安全平台",
         ruleposition: 1,
-        rulecontent: /appscan\.360\.cn/im
+        rulecontent: /appscan.360.cn/im
     },
     {
         rulename: "h83_monyer_domain_url_2",
         type: 4,
         commandments:"敏感域名请求: 小米手机服务",
         ruleposition: 1,
-        rulecontent: /m\.mi\.com/im
+        rulecontent: /m.mi.com/im
     },
     {
         rulename: "h84_monyer_domain_url_3",
         type: 4,
         commandments:"敏感域名请求: 百度支付：度小满钱包2",
         ruleposition: 1,
-        rulecontent: /zhifu\.duxiaoman\.com/im
+        rulecontent: /zhifu.duxiaoman.com/im
     },
     {
         rulename: "h85_monyer_domain_url_4",
         type: 4,
         commandments:"敏感域名请求: 小米账户",
         ruleposition: 1,
-        rulecontent: /account\.xiaomi\.com/im
+        rulecontent: /account.xiaomi.com/im
     },
     {
         rulename: "h86_monyer_domain_url_5",
         type: 4,
         commandments:"敏感域名请求: 阿里淘宝网接口1-log.mmstat.com",
         ruleposition: 1,
-        rulecontent: /log\.mmstat\.com/im
+        rulecontent: /log.mmstat.com/im
     },
     {
         rulename: "h87_monyer_domain_url_6",
         type: 4,
         commandments:"敏感域名请求: 小米接口1-s1.mi.com",
         ruleposition: 1,
-        rulecontent: /s1\.mi\.com/im
+        rulecontent: /s1.mi.com/im
     },
     {
         rulename: "h88_monyer_domain_url_7",
         type: 4,
         commandments:"敏感域名请求: 阿里淘宝网接口2-fourier.taobao.com",
         ruleposition: 1,
-        rulecontent: /fourier\.taobao\.com/im
+        rulecontent: /fourier.taobao.com/im
     },
     {
         rulename: "h89_monyer_domain_url_8",
         type: 4,
         commandments:"敏感域名请求: Fingerprints设备识别",
         ruleposition: 1,
-        rulecontent: /api\.fpjs\.io/im
+        rulecontent: /api.fpjs.io/im
     },
     {
         rulename: "h90_monyer_domain_url_9",
         type: 4,
         commandments:"敏感域名请求: Fingerprints设备识别2",
         ruleposition: 1,
-        rulecontent: /api\.sjpf\.io/im
+        rulecontent: /api.sjpf.io/im
     },
     {
         rulename: "h91_monyer_websitestatistical_10",
@@ -1484,28 +1485,28 @@ var printerData = [
     },
     {
         rulename: "h92_monyer_websitestatistical_11",
-        type: 4,
+        type: 5,
         commandments:"网站流量分析与跟踪请求: 友盟CNZZ网站流量统计",
         ruleposition: 1,
         rulecontent: /cnzz\.com/im
     },
     {
         rulename: "h93_monyer_websitestatistical_12",
-        type: 4,
+        type: 5,
         commandments:"网站流量分析与跟踪请求: 51LA网站统计与数据分析",
         ruleposition: 1,
         rulecontent: /51\.la/im
     },
     {
         rulename: "h94_monyer_websitestatistical_13",
-        type: 4,
+        type: 5,
         commandments:"网站流量分析与跟踪请求: 谷歌分析统计",
         ruleposition: 1,
         rulecontent: /google\-analytics\.com/im
     },
     {
         rulename: "h95_monyer_websitestatistical_14",
-        type: 4,
+        type: 5,
         commandments:"网站流量分析与跟踪请求: 谷歌访问跟踪器",
         ruleposition: 1,
         rulecontent: /googletagservices\.com/im
@@ -1515,98 +1516,98 @@ var printerData = [
         type: 4,
         commandments:"敏感域名请求: 腾讯视频接口",
         ruleposition: 1,
-        rulecontent: /access\.video\.qq\.com/im
+        rulecontent: /access.video.qq.com/im
     },
     {
         rulename: "h97_fuckjsonp_domain_url_2",
         type: 4,
         commandments:"敏感域名请求: 腾讯视频支付接口",
         ruleposition: 1,
-        rulecontent: /pay\.video\.qq\.com/im
+        rulecontent: /pay.video.qq.com/im
     },
     {
         rulename: "h98_fuckjsonp_domain_url_3",
         type: 4,
         commandments:"敏感域名请求: 苏宁易购接口",
         ruleposition: 1,
-        rulecontent: /myjr\.suning\.com/im
+        rulecontent: /myjr.suning.com/im
     },
     {
         rulename: "h99_fuckjsonp_domain_url_4",
         type: 4,
         commandments:"敏感域名请求: 苏宁易购登录接口",
         ruleposition: 1,
-        rulecontent: /loginst\.suning\.com/im
+        rulecontent: /loginst.suning.com/im
     },
     {
         rulename: "h100_fuckjsonp_domain_url_5",
         type: 4,
         commandments:"敏感域名请求: 凤凰游戏域名接口",
         ruleposition: 1,
-        rulecontent: /www\.fhyx\.com/im
+        rulecontent: /www.fhyx.com/im
     },
     {
         rulename: "h101_fuckjsonp_domain_url_6",
         type: 4,
         commandments:"敏感域名请求: 有妖气原创漫画搜索接口",
         ruleposition: 1,
-        rulecontent: /so\.u17\.com/im
+        rulecontent: /so.u17.com/im
     },
     {
         rulename: "h102_fuckjsonp_domain_url_7",
         type: 4,
         commandments:"敏感域名请求: 爱学术域名接口",
         ruleposition: 1,
-        rulecontent: /www\.ixueshu\.com/im
+        rulecontent: /www.ixueshu.com/im
     },
     {
         rulename: "h103_fuckjsonp_domain_url_8",
         type: 4,
         commandments:"敏感域名请求: 豆瓣网接口",
         ruleposition: 1,
-        rulecontent: /www\.douban\.com/im
+        rulecontent: /www.douban.com/im
     },
     {
         rulename: "h104_fuckjsonp_domain_url_9",
         type: 4,
         commandments:"敏感域名请求: 迅雷下载接口",
         ruleposition: 1,
-        rulecontent: /yuancheng\.xunlei\.com/im
+        rulecontent: /yuancheng.xunlei.com/im
     },
     {
         rulename: "h105_fuckjsonp_domain_url_10",
         type: 4,
         commandments:"敏感域名请求: 百度招商接口",
         ruleposition: 1,
-        rulecontent: /istats\.baidu\.com/im
+        rulecontent: /istats.baidu.com/im
     },
     {
         rulename: "h106_fuckjsonp_domain_url_11",
         type: 4,
         commandments:"敏感域名请求: 运营商[联通]接口",
         ruleposition: 1,
-        rulecontent: /10010\.com/im
+        rulecontent: /10010.com/im
     },
     {
         rulename: "h107_fuckjsonp_domain_url_12",
         type: 4,
         commandments:"敏感域名请求: 运营商[移动]接口",
         ruleposition: 1,
-        rulecontent: /10086\.cn/im
+        rulecontent: /10086.cn/im
     },
     {
         rulename: "h108_fuckjsonp_domain_url_13",
         type: 4,
         commandments:"敏感域名请求: 运营商[电信]接口1",
         ruleposition: 1,
-        rulecontent: /189\.cn/im
+        rulecontent: /189.cn/im
     },
     {
         rulename: "h109_fuckjsonp_domain_url_14",
         type: 4,
         commandments:"敏感域名请求: 运营商[电信]接口2",
         ruleposition: 1,
-        rulecontent: /chinatelecom\.com\.cn/im
+        rulecontent: /chinatelecom.com.cn/im
     },
     {
         rulename: "h110_heimdallr_js_url_1",
@@ -1634,112 +1635,112 @@ var printerData = [
         type: 4,
         commandments:"敏感域名请求: 超星用户接口",
         ruleposition: 1,
-        rulecontent: /passport2\.chaoxing\.com/im
+        rulecontent: /passport2.chaoxing.com/im
     },
     {
         rulename: "h114_heimdallr_domain_url_5",
         type: 4,
         commandments:"敏感域名请求: 百度接口5-百度账号及设备信息接口",
         ruleposition: 1,
-        rulecontent: /sofire\.baidu\.com/im
+        rulecontent: /sofire.baidu.com/im
     },
     {
         rulename: "h115_heimdallr_domain_url_6",
         type: 4,
         commandments:"敏感域名请求: 百度接口6-百度教育接口",
         ruleposition: 1,
-        rulecontent: /easylearn\.baidu\.com/im
+        rulecontent: /easylearn.baidu.com/im
     },
     {
         rulename: "h116_heimdallr_domain_url_7",
         type: 4,
         commandments:"敏感域名请求: 百度接口7-百度读书接口",
         ruleposition: 1,
-        rulecontent: /yuedu\.baidu\.com/im
+        rulecontent: /yuedu.baidu.com/im
     },
     {
         rulename: "h117_heimdallr_domain_url_8",
         type: 4,
         commandments:"敏感域名请求: 58同城账号接口",
         ruleposition: 1,
-        rulecontent: /employer\.58\.com/im
+        rulecontent: /employer.58.com/im
     },
     {
         rulename: "h118_heimdallr_domain_url_9",
         type: 4,
         commandments:"敏感域名请求: 腾讯QQ接口3-u.y.qq.com",
         ruleposition: 1,
-        rulecontent: /u\.y\.qq\.com/im
+        rulecontent: /u.y.qq.com/im
     },
     {
         rulename: "h119_heimdallr_domain_url_10",
         type: 4,
         commandments:"敏感域名请求: 超星慕课接口",
         ruleposition: 1,
-        rulecontent: /mooc1\-1\.chaoxing\.com/im
+        rulecontent: /mooc1-1.chaoxing.com/im
     },
     {
         rulename: "h120_heimdallr_domain_url_11",
         type: 4,
         commandments:"敏感域名请求: 58同城账号接口2",
         ruleposition: 1,
-        rulecontent: /passport\.58\.com/im
+        rulecontent: /passport.58.com/im
     },
     {
         rulename: "h121_heimdallr_domain_url_12",
         type: 4,
         commandments:"敏感域名请求: 优酷接口3-download.youku.com",
         ruleposition: 1,
-        rulecontent: /download\.youku\.com/im
+        rulecontent: /download.youku.com/im
     },
     {
         rulename: "h122_heimdallr_domain_url_13",
         type: 4,
         commandments:"敏感域名请求: 新浪爱问知识人接口2",
         ruleposition: 1,
-        rulecontent: /static\.iask\.cn/im
+        rulecontent: /static.iask.cn/im
     },
     {
         rulename: "h123_heimdallr_domain_url_14",
         type: 4,
         commandments:"敏感域名请求: 苏宁易购账号接口",
         ruleposition: 1,
-        rulecontent: /passport\.suning\.com/im
+        rulecontent: /passport.suning.com/im
     },
     {
         rulename: "h124_heimdallr_domain_url_15",
         type: 4,
         commandments:"敏感域名请求: 百度接口8-百度资源服务器接口",
         ruleposition: 1,
-        rulecontent: /sofire\.bdstatic\.com/im
+        rulecontent: /sofire.bdstatic.com/im
     },
     {
         rulename: "h125_heimdallr_domain_url_16",
         type: 4,
         commandments:"敏感域名请求: 百度接口9-百度网盟推广接口",
         ruleposition: 1,
-        rulecontent: /cbjs\.baidu\.com/im
+        rulecontent: /cbjs.baidu.com/im
     },
     {
         rulename: "h126_heimdallr_domain_url_17",
         type: 4,
         commandments:"敏感域名请求: 新浪爱问知识人接口3",
         ruleposition: 1,
-        rulecontent: /static3\.iask\.cn/im
+        rulecontent: /static3.iask.cn/im
     },
     {
         rulename: "h127_heimdallr_domain_url_18",
         type: 4,
         commandments:"敏感域名请求: 百度接口10-百度系移动端接口",
         ruleposition: 1,
-        rulecontent: /sfp\.safe\.baidu\.com/im
+        rulecontent: /sfp.safe.baidu.com/im
     },
     {
         rulename: "h128_heimdallr_domain_url_19",
         type: 4,
         commandments:"敏感域名请求: 新浪爱问知识人接口4-用于获取IP及归属地信息接口",
         ruleposition: 1,
-        rulecontent: /ipip\.iask\.cn/im
+        rulecontent: /ipip.iask.cn/im
     },
     {
         rulename: "h129_heimdallr_js_url_20",
@@ -1753,7 +1754,7 @@ var printerData = [
         type: 4,
         commandments:"敏感域名请求: 百度接口11-百度hao123接口",
         ruleposition: 1,
-        rulecontent: /wapsite\.baidu\.com/im
+        rulecontent: /wapsite.baidu.com/im
     },
     {
         rulename: "h131_heimdallr_domain_url_22",

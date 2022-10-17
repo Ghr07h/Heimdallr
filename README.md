@@ -64,6 +64,29 @@
 
 6. 插件目的为发现直接访问无法识别的组件或框架，请勿添加可以直接识别的组件的特征到指纹库（如spark未授权页面），增加无意义的识别流程导致页面加载延迟。
 
+## 继续开发
+
+Vue3前端
+
+```
+cd Vue_popup\heimdallr_v3
+npm install
+npm run build:watch
+```
+
+chrome插件
+
+```
+cd .\Heimdallr\
+```
+
+指纹
+
+```
+cd .\Heimdallr\resource\data
+vim data.js
+```
+
 ## 致谢
 
 https://github.com/iiiusky/AntiHoneypot-Chrome-simple

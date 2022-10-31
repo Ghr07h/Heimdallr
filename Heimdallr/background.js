@@ -83,7 +83,7 @@ function initConfig(){
       console.log("初始化配置数据");
       console.log(HConfig);
       console.log(webstorage);
-
+        
 
       initMonitor()
       // 选项类功能检查是否启用
@@ -119,15 +119,17 @@ function checkSelectFunction(){
     } else {
       chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
         if (currentRules.length != 0) {
-          chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
+          let removeNumberArray = Array.from(new Array(currentRules.length+1).keys()).slice(1)
+          chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : removeNumberArray }, function(){console.log("动态删除Blocking规则")})
         } else {
           console.log("无需删除，Blocking规则不存在")
         }
       })
     }
-    if (HConfig.webRTCIPHandlingPolicy == true){
+    if (HConfig.webRtcSettingModify == true){
       chrome.privacy.network.webRTCIPHandlingPolicy.get({},function(details){
         if (details.value != "disable_non_proxied_udp") {
+          console.log("WebRTC策略为默认，1提高为disable_non_proxied_udp")
           chrome.privacy.network.webRTCIPHandlingPolicy.set({
             value: 'disable_non_proxied_udp'
           })
@@ -136,6 +138,7 @@ function checkSelectFunction(){
     } else {
       chrome.privacy.network.webRTCIPHandlingPolicy.get({},function(details){
         if (details.value == "disable_non_proxied_udp") {
+          console.log("WebRTC策略为高，1降为默认")
           chrome.privacy.network.webRTCIPHandlingPolicy.set({
             value: 'default'
           })
@@ -164,7 +167,8 @@ function checkSelectFunction(){
     if (HConfig.blockHoneypot == true) {
       chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
         if (currentRules.length != 0) {
-          chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
+          let removeNumberArray = Array.from(new Array(currentRules.length+1).keys()).slice(1)
+          chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : removeNumberArray }, function(){console.log("动态删除Blocking规则")})
         } else {
           console.log("无需删除，Blocking规则不存在")
         }
@@ -280,7 +284,8 @@ function storageOnChangedListener(changes, areaname) {
           // 暂停拦截
           chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
             if (currentRules.length != 0) {
-              chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
+              let removeNumberArray = Array.from(new Array(currentRules.length+1).keys()).slice(1)
+              chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : removeNumberArray }, function(){console.log("动态删除Blocking规则")})
             } else {
               console.log("无需删除，Blocking规则不存在")
             }
@@ -294,6 +299,7 @@ function storageOnChangedListener(changes, areaname) {
           // 开启严格策略
           chrome.privacy.network.webRTCIPHandlingPolicy.get({},function(details){
             if (details.value == "default") {
+              console.log("WebRTC策略为默认，2提高为disable_non_proxied_udp")
               chrome.privacy.network.webRTCIPHandlingPolicy.set({
                 value: 'disable_non_proxied_udp'
               })
@@ -303,6 +309,7 @@ function storageOnChangedListener(changes, areaname) {
           // 关闭严格策略
           chrome.privacy.network.webRTCIPHandlingPolicy.get({},function(details){
             if (details.value == "disable_non_proxied_udp") {
+              console.log("WebRTC策略为高，2降为默认")
               chrome.privacy.network.webRTCIPHandlingPolicy.set({
                 value: 'default'
               })
@@ -508,7 +515,8 @@ function deleteCheckMonitor(){
   if (HConfig.blockHoneypot == true) {
     chrome.declarativeNetRequest.getDynamicRules(function(currentRules){
       if (currentRules.length != 0) {
-        chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : HBlockingDomainRulesIds }, function(){console.log("动态删除Blocking规则")})
+        let removeNumberArray = Array.from(new Array(currentRules.length+1).keys()).slice(1)
+        chrome.declarativeNetRequest.updateDynamicRules( {"addRules" : [], "removeRuleIds" : removeNumberArray }, function(){console.log("动态删除Blocking规则")})
       } else {
         console.log("无需删除，Blocking规则不存在")
       }

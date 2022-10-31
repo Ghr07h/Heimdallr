@@ -1,5 +1,5 @@
 /*
-当前指纹类规则103条, 蜜罐类规则132条
+当前指纹类规则103条, 蜜罐类规则151条
 
 新增指纹规则如下
 {
@@ -841,7 +841,7 @@ var printerData = [
 
     // =========================================================================
     // 蜜罐类特征
-    // 数量 130 (jsonp 122, 敏感特征 1, 敏感请求 5, 敏感特征 4)
+    // 数量 151 
     // 可检测特征
     // 敏感域名请求(jsonp)、蜜罐资源特征、网站流量分析与跟踪请求、敏感关键词、敏感脚本调用
     // =========================================================================
@@ -1738,7 +1738,7 @@ var printerData = [
     {
         rulename: "h128_heimdallr_domain_url_19",
         type: 4,
-        commandments:"敏感域名请求: 新浪爱问知识人接口4-用于获取IP及归属地信息接口",
+        commandments:"敏感域名请求: 新浪爱问知识人接口4-IP及归属地信息接口",
         ruleposition: 1,
         rulecontent: /ipip.iask.cn/im
     },
@@ -1757,7 +1757,7 @@ var printerData = [
         rulecontent: /wapsite.baidu.com/im
     },
     {
-        rulename: "h131_heimdallr_domain_url_22",
+        rulename: "h131_heimdallr_js_url_22",
         type: 3,
         commandments:"敏感脚本调用: 加载特征识别脚本[fingerprint.js]",
         ruleposition: 1,
@@ -1769,6 +1769,139 @@ var printerData = [
         commandments:"敏感脚本调用: Url检测到敏感脚本关键字[fingerprintjs]",
         ruleposition: 1,
         rulecontent: /fingerprintjs/im
+    },
+    {
+        rulename: "h133_heimdallr_js_url_24",
+        type: 3,
+        commandments:"敏感脚本调用: 加载蜜罐热点溯源jsonp脚本",
+        ruleposition: 1,
+        rulecontent: /monitordevinfo\/common\.js/im
+    },
+    {
+        rulename: "h134_heimdallr_domain_url_25",
+        type: 4,
+        commandments:"敏感域名请求: 访问蜜罐子框架请求域名hackit.me",
+        ruleposition: 1,
+        rulecontent: /hackit.me/im
+    },
+    {
+        rulename: "h135_heimdallr_domain_url_26",
+        type: 4,
+        commandments:"敏感域名请求: 访问蜜罐JS脚本资源域名sloss.xyz",
+        ruleposition: 1,
+        rulecontent: /sloss.xyz/im
+    },
+    {
+        rulename: "h136_heimdallr_domain_url_27",
+        type: 3,
+        commandments:"敏感域名请求: 网站请求Burpsuite自带浏览器静态资源特征",
+        ruleposition: 1,
+        rulecontent: /burp/im
+    },
+    {
+        rulename: "h137_heimdallr_domain_url_28",
+        type: 4,
+        commandments:"敏感域名请求: 移动认证接口-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /cmpassport.com/im
+    },
+    {
+        rulename: "h138_heimdallr_domain_url_29",
+        type: 4,
+        commandments:"敏感域名请求: 电信天翼认证接口-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /id6.me/im
+    },
+    {
+        rulename: "h139_heimdallr_domain_url_30",
+        type: 4,
+        commandments:"敏感域名请求: 电信认证接口2-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /open.e.189.cn/im
+    },
+    {
+        rulename: "h140_heimdallr_domain_url_31",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /wostore.cn/im
+    },
+    {
+        rulename: "h141_heimdallr_domain_url_32",
+        type: 4,
+        commandments:"敏感域名请求: 联通开发者平台接口-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /mdn.open.wo.cn/im
+    },
+    {
+        rulename: "h142_heimdallr_domain_url_33",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口2-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /enrichgw.10010.com/im
+    },
+    {
+        rulename: "h143_heimdallr_domain_url_34",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口3-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /auth.wosms.cn/im
+    },
+    {
+        rulename: "h144_heimdallr_domain_url_35",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口4-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /id.mail.wo.cn/im
+    },
+    {
+        rulename: "h145_heimdallr_domain_url_36",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口5-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /hmrz.wo.cn/im
+    },
+    {
+        rulename: "h146_heimdallr_domain_url_37",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口6-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /nisportal.10010.com/im
+    },
+    {
+        rulename: "h147_heimdallr_domain_url_38",
+        type: 4,
+        commandments:"敏感域名请求: 联通认证接口7-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /nishub1.10010.com/im
+    },
+    {
+        rulename: "h148_heimdallr_domain_url_39",
+        type: 4,
+        commandments:"敏感域名请求: 中卓信移动认证接口-可用于热点溯源手机号",
+        ruleposition: 1,
+        rulecontent: /zzx9.cn/im
+    },
+    {
+        rulename: "h149_heimdallr_domain_url_40",
+        type: 4,
+        commandments:"敏感域名请求: 阿里淘宝网接口3-淘宝官网接口",
+        ruleposition: 1,
+        rulecontent: /www.taobao.com/im
+    },
+    {
+        rulename: "h150_heimdallr_domain_url_41",
+        type: 4,
+        commandments:"敏感域名请求: 起点中文网",
+        ruleposition: 1,
+        rulecontent: /qidian.com/im
+    },
+    {
+        rulename: "h151_heimdallr_domain_url_42",
+        type: 4,
+        commandments:"敏感域名请求: YY直播",
+        ruleposition: 1,
+        rulecontent: /yy.com/im
     },
 ]
 
@@ -1789,14 +1922,12 @@ var HPrinter = null
 
 // 插件拦截的蜜罐jsonp类请求规则
 var HBlockingDomainRules = null
-var HBlockingDomainRulesIds = null
 
 
 function initPrinter(){
     HPrinter = {"position1" : [], "position2" : [], "position3" : [], "position4" : [], "position5" : []}
 
     HBlockingDomainRules = []
-    HBlockingDomainRulesIds = []
 
     let tmpIndex = 1
 
@@ -1823,7 +1954,6 @@ function initPrinter(){
                 tmpBlockingRule.action = { "type": "block" },
                 tmpBlockingRule.condition = {"requestDomains" : [tmpDomain], "resourceTypes" : ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]}
                 HBlockingDomainRules.push(tmpBlockingRule)
-                HBlockingDomainRulesIds.push(tmpIndex)
                 tmpIndex++
             }
         } else if (i.type == 3) {
@@ -1835,7 +1965,6 @@ function initPrinter(){
                 tmpBlockingRule.action = { "type": "block" },
                 tmpBlockingRule.condition = {"urlFilter" : tmpDomain, "resourceTypes" : ["main_frame", "sub_frame", "stylesheet", "script", "image", "font", "object", "xmlhttprequest", "ping", "csp_report", "media", "websocket", "webtransport", "webbundle", "other"]}
                 HBlockingDomainRules.push(tmpBlockingRule)
-                HBlockingDomainRulesIds.push(tmpIndex)
                 tmpIndex++
             }
         }

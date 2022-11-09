@@ -119,9 +119,9 @@ vim data.js
 ```
 
 ## ⭐404星链计划
-<img src lazysrc="https://github.com/knownsec/404StarLink-Project/raw/master/logo.png" width="30%">
+<img src lazysrc="https://github.com/knownsec/404StarLink/blob/master/Images/logo.png" width="30%">
 
-Heimdallr现已加入 [404星链计划](https://github.com/knownsec/404StarLink)
+**Heimdallr**现已加入 [404星链计划](https://github.com/knownsec/404StarLink)
 
 ## 🎊致谢
 

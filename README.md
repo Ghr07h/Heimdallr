@@ -86,7 +86,7 @@
 
 
 
-## ⭐高级
+## 🔔高级
 
 1. 插件的识别对象基于【标签页】，标签页页面变更【(域名+端口)或(IP+端口)】时清空结果，切换标签页时结果会暂存，关闭标签页或窗口时删除对应结果。
 2. 插件默认只存在被动流量监控，不会因为敏感指纹的识别触发防火墙处置。
@@ -117,6 +117,11 @@ cd .\Heimdallr\
 cd .\Heimdallr\resource\data
 vim data.js
 ```
+
+## ⭐404星链计划
+<img src lazysrc="https://github.com/knownsec/404StarLink-Project/raw/master/logo.png" width="30%">
+
+Heimdallr现已加入 [404星链计划](https://github.com/knownsec/404StarLink)
 
 ## 🎊致谢
 

@@ -1903,6 +1903,24 @@ var printerData = [
         ruleposition: 1,
         rulecontent: /yy.com/im
     },
+    {
+        rulename: "h152_heimdallr_domain_url_43",
+        type: 4,
+        commandments:"敏感域名请求: 新浪接口3-mix.sina.com.cn",
+        ruleposition: 1,
+        rulecontent: /mix.sina.com.cn/im
+    },
+
+
+
+
+
+
+
+
+
+
+
 ]
 
 

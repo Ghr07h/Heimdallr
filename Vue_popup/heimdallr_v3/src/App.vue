@@ -186,7 +186,7 @@
                         </el-col>
                         <el-col :span="9">
                             <div align="right">
-                                <span v-if="webRtcSettingModifySwitch"><el-tag type="success" effect="dark">防溯源严格策略</el-tag></span>
+                                <span v-if="webRtcView"><el-tag type="success" effect="dark">防溯源严格策略</el-tag></span>
                                 <span v-else><el-tag type="info" effect="dark">默认策略</el-tag></span>
                             </div>
                         </el-col>
@@ -200,7 +200,7 @@
                         </el-col>
                         <el-col :span="10">
                             <div align="right">
-                                <span v-if="canvasInjectSwitch"><el-tag type="success" effect="dark">已开启内容脚本注入</el-tag></span>
+                                <span v-if="canvasInjectView"><el-tag type="success" effect="dark">已开启内容脚本注入</el-tag></span>
                                 <span v-else><el-tag type="info" effect="dark">未开启内容脚本注入</el-tag></span>
                             </div>
                         </el-col>
@@ -239,6 +239,7 @@
 <script lang="ts">
   import { defineComponent } from "vue";
   import { ElMessage } from 'element-plus'
+import { tr } from "element-plus/es/locale";
 
   export default defineComponent ({
     data() {
@@ -255,7 +256,10 @@
             blockHoneypotSwitch: null,
             noPageCacheSwitch: null,
             webRtcSettingModifySwitch: null,
-            canvasInjectSwitch: null
+            canvasInjectSwitch: null,
+
+            webRtcView: null,
+            canvasInjectView: null
         };
     },
     methods: {
@@ -269,7 +273,10 @@
             selectedTab = document.getElementById("tab-3");
             selectedTab.onmouseover = function () { _this.tabPosition = "3" };
             selectedTab = document.getElementById("tab-4");
-            selectedTab.onmouseover = function () { _this.tabPosition = "4" };
+            selectedTab.onmouseover = function () { 
+                _this.tabPosition = "4" 
+                _this.checkView()
+            };
         },
         initTabsSettinJumper(){
             if (window.location.hash != null && window.location.hash != "" && window.location.hash =="#setting"){
@@ -293,6 +300,10 @@
                             _this.webRtcSettingModifySwitch = webstorage.HConfig.webRtcSettingModify
                             _this.canvasInjectSwitch = webstorage.HConfig.canvasInject
 
+                            _this.webRtcView = false
+                            _this.canvasInjectView = false
+                            _this.checkView()
+                            
                             _this.initFlag = true
                         }
                         // 初始化数据后根据数据初始化监听器
@@ -440,6 +451,23 @@
                     if (_this.honeypotLable.length != 0){
                         _this.tabPosition = "2"
                     }
+                }
+            })
+        },
+        checkView(){
+            var _this = this
+            chrome.privacy.network.webRTCIPHandlingPolicy.get({},function(details){
+                if (details.value == "disable_non_proxied_udp" || details.value == "proxy_only") {
+                    _this.webRtcView = true
+                } else {
+                    _this.webRtcView = false
+                }
+            })
+            chrome.scripting.getRegisteredContentScripts(function(injectContentScript){
+                if (injectContentScript != null && injectContentScript.length == 1 && injectContentScript[0].id == "HInject"){
+                    _this.canvasInjectView = true
+                } else {
+                    _this.canvasInjectView = false
                 }
             })
         },

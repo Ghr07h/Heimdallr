@@ -298,7 +298,7 @@ function storageOnChangedListener(changes, areaname) {
         if (changes.HConfig.newValue.webRtcSettingModify == true){
           // 开启严格策略
           chrome.privacy.network.webRTCIPHandlingPolicy.get({},function(details){
-            if (details.value == "default") {
+            if (details.value != "disable_non_proxied_udp") {
               console.log("WebRTC策略为默认，2提高为disable_non_proxied_udp")
               chrome.privacy.network.webRTCIPHandlingPolicy.set({
                 value: 'disable_non_proxied_udp'
